@@ -92,4 +92,4 @@ Credits to [Danny de Vries](https://github.com/dandevri) && [Laurens Aarnoudse](
 - Aarnoudse, L.  (2020, October 28). Rubric. Consulted from https://github.com/cmda-tt/course-20-21
 
 ## :cop: License
-This project from [Ralf](https://github.com/ralfz123) has a [MIT © License](https://github.com/ralfz123/prototype_datingapp/blob/master/LICENSE.md)
+This project from [Ralf](https://github.com/ralfz123) has a [MIT © License](https://github.com/ralfz123/frontend-data/blob/main/LICENSE)
