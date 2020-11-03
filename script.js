@@ -6,7 +6,7 @@ const selectedColumn = 'areaid';
 
 // Fetching data - API
 fetchingData(endpointOne).then((dataRDW) => {
-	const getAreaIdArray = newDataArray(dataRDW, selectedColumn);
+	const getAreaIdArray = newStringDataArray(dataRDW, selectedColumn);
 	const getCapacityArray = newDataArray(dataRDW, 'capacity');
 	// const uniqueUsageValue = listUnique(getAreaIdArray);
 	console.log('AreaId is:', getAreaIdArray);
@@ -32,11 +32,34 @@ async function fetchingData(url) {
 	}
 }
 
-// Filter data - Make a new Array based on an unique key
+// Filter and transform data - Make a new Array based on an unique key and checks if value is correct
 function newDataArray(dataArray, key) {
-	return dataArray.map((item) => item[key]);
+	return dataArray.map((item) => {
+		item[key] = Number(item[key]); // Makes all items from unique key a NUMBER type.
+
+		if (item[key] <= 0) { // When item is lower than or equal to 0, return null
+			console.log('Negative or zero value');
+			return null;
+		} else {
+			return item[key];
+		}
+	});
 }
 
+// NOT DONE YET Filter string data - Make a new Array based on an unique key and checks if value is correct
+function newStringDataArray(dataArray, key) {
+	return dataArray.map((item) => {
+		item[key] = item[key];
+		// console.log(item[key])
+
+		if (item[key] <= 0) {
+			console.log('Negative or zero value');
+			return null;
+		} else {
+			return item[key];
+		}
+	});
+}
 
 // Clean & Transform data
 //    - transform random/incorrect data in NULL
