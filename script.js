@@ -52,8 +52,9 @@ function newStringDataArray(dataArray, key) {
 		item[key] = item[key];
 		// console.log(item[key])
 
-		if (item[key] <= 0) {
-			console.log('Negative or zero value');
+		if (item[key] === ('')) {
+			console.log('Empty string');
+			console.log(item)	
 			return null;
 		} else {
 			return item[key];
