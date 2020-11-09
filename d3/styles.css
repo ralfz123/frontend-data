@@ -1,0 +1,13 @@
+body {
+	margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #1A1F2B;
+} 
+
+path {
+  fill: #0B0909;
+  stroke: #FFFFFF;
+  stroke-opacity: 0.1; 
+}
