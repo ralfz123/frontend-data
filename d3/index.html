@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Auto in de stad</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="https://unpkg.com/topojson@3.0.2			/dist/topojson.min.js"></script>
-    <script src="https://d3js.org/d3-zoom.v2.min.js"></script>
-    <script src="https://unpkg.com/topojson@3"></script>
-</head>
-<body>
-    <svg></svg>
-    <script src="projection/bundle.js"></script>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Auto in de stad</title>
+		<link rel="stylesheet" href="styles.css" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,100&display=swap"
+			rel="stylesheet"
+		/>
+		<script src="https://d3js.org/d3.v6.min.js"></script>
+		<script src="https://unpkg.com/topojson@3.0.2			/dist/topojson.min.js"></script>
+		<script src="https://d3js.org/d3-zoom.v2.min.js"></script>
+		<script src="https://unpkg.com/topojson@3"></script>
+	</head>
+	<body>
+		<!-- Flexbox needed, because 2 columns -->
+		<div class="dashboard">
+			<h1>TITEL</h1>
+			<p>Ideale plek woonbuurt voor elektrische bestuurder</p>
+
+			<div class="sort-option">
+				<input type="radio" id="day" value="day" name="daytime" />
+				<label for="day">Overdag</label>
+
+				<input type="radio" id="eve" value="eve" name="daytime" />
+				<label for="eve">'s Avonds</label>
+			</div>
+
+			<div class="active-framework">
+				<p>Hier komt informatie over bepaalde plekken.</p>
+			</div>
+		</div>
+
+		<svg></svg>
+		<script src="projection/bundle.js"></script>
+	</body>
 </html>

@@ -6,6 +6,34 @@ body {
   background: rgb(53, 68, 102);
 } 
 
+body .dashboard {
+  background-color: rgb(73, 100, 170);
+  border-radius: 5px;
+  
+  position: absolute;  
+  width: 30%;
+  padding: 1em;
+  margin: 1em;
+  margin-left: .5em;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.39);  
+  
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+body .dashboard .active-framework {
+  border: 1px dotted rgb(192, 192, 192);
+  color: rgb(24, 24, 24);
+  border-radius: 10px;
+  margin-top: 50px;
+  padding: 10px;
+}
+
+ /* hover state - label */
+label:hover {
+  text-decoration: underline;
+}
+
 path {
   fill: rgb(26, 37, 61);
   stroke: #FFFFFF;
