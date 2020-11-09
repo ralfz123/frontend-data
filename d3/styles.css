@@ -1,41 +1,75 @@
 body {
 	margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  overflow: hidden;
-  background: rgb(53, 68, 102);
-} 
+	padding: 0;
+	box-sizing: border-box;
+	overflow: hidden;
+	background: rgb(53, 68, 102);
+}
 
 body .dashboard {
-  background-color: rgb(73, 100, 170);
-  border-radius: 5px;
-  
-  position: absolute;  
-  width: 30%;
-  padding: 1em;
-  margin: 1em;
-  margin-left: .5em;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.39);  
-  
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
+	background-color: rgb(73, 100, 170);
+	border-radius: 5px;
+
+	position: absolute;
+	width: 30%;
+	padding: 1em;
+	margin: 1em;
+	margin-left: 0.5em;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.39);
+
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
 }
 
 body .dashboard .active-framework {
-  border: 1px dotted rgb(192, 192, 192);
-  color: rgb(24, 24, 24);
-  border-radius: 10px;
-  margin-top: 50px;
-  padding: 10px;
+	border: 1px dotted rgb(192, 192, 192);
+	color: rgb(24, 24, 24);
+	border-radius: 10px;
+	margin-top: 50px;
+	padding: 10px;
 }
 
- /* hover state - label */
+body .dashboard .legenda {
+	border: 1px solid grey;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+  flex-direction: row;
+	margin-top: 50px;
+}
+
+body .dashboard .legenda > div {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+}
+
+.legenda-circle-1 {
+	background-color: rgb(175, 11, 11);
+	border: 3px solid rgb(175, 11, 11);
+}
+
+.legenda-circle-2 {
+	background-color: rgb(7, 160, 7);
+	border: 3px solid rgb(7, 160, 7);
+}
+
+.legenda-circle-3 {
+	background-color: none;
+	border: 2px dashed orange;
+}
+
+body .dashboard .legenda p {
+  width: 12em;
+}
+
+/* hover state - label */
 label:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 path {
-  fill: rgb(26, 37, 61);
-  stroke: #FFFFFF;
-  stroke-opacity: 0.1; 
+	fill: rgb(26, 37, 61);
+	stroke: #ffffff;
+	stroke-opacity: 0.1;
 }

@@ -21,6 +21,7 @@
 			<h1>TITEL</h1>
 			<p>Ideale plek woonbuurt voor elektrische bestuurder</p>
 
+			<!-- Has to filter the data in day OR eve -->
 			<div class="sort-option">
 				<input type="radio" id="day" value="day" name="daytime" />
 				<label for="day">Overdag</label>
@@ -29,9 +30,23 @@
 				<label for="eve">'s Avonds</label>
 			</div>
 
+			<!-- Legenda -->
+			<div class="legenda">
+				<div class="legenda-circle-1"></div>
+				<p>Druk</p>
+
+				<div class="legenda-circle-2"> </div>
+				<p>Rustig</p>
+
+				<div class="legenda-circle-3"> </div>
+				<p>Ideale woonbuurt</p>
+            </div>
+            
+            <!-- Information about the data / data explained -->
 			<div class="active-framework">
 				<p>Hier komt informatie over bepaalde plekken.</p>
 			</div>
+
 		</div>
 
 		<svg></svg>
