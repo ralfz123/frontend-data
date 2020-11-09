@@ -17,7 +17,7 @@
     longitude: '4.4426398'
   };
 
-  console.log(dummydata.latitude);
+  // console.log(dummydata.latitude);
 
   nlData().then((data) => {
     const path = d3__default.geoPath();
@@ -53,7 +53,7 @@
     	.append('circle')
     	.attr('r', 2);
     
-    console.log(gemeentes);
+    // console.log(gemeentes);
 
     svg.call(zoom);
 
@@ -73,7 +73,7 @@
       const [[x0, y0], [x1, y1]] = path.bounds(d);
       event.stopPropagation();
       gemeentes.transition().style('fill', null);
-      d3__default.select(this).transition().style('fill', 'red');
+      d3__default.select(this).transition().style('fill', 'grey');
       svg
         .transition()
         .duration(750)

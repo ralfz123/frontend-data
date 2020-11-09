@@ -3,11 +3,11 @@ body {
   padding: 0;
   box-sizing: border-box;
   overflow: hidden;
-  background: #1A1F2B;
+  background: rgb(53, 68, 102);
 } 
 
 path {
-  fill: #0B0909;
+  fill: rgb(26, 37, 61);
   stroke: #FFFFFF;
   stroke-opacity: 0.1; 
 }
