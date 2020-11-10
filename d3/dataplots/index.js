@@ -13,9 +13,7 @@ fetchingData(endpointOne).then((dataRDW) => {
 	const getCapacityArray = newDataArray(dataRDW, selectedColumn);
 	console.log('Charging Capacity is:', getCapacityArray);
 
-	// const emptyStringsInAreas = countValuesInArray(getAreaIdArray, '');
-	// console.log('empty strings in area', emptyStringsInAreas);
-
+	// Checks if array has a unique key
 	let checkKeyPresenceInArray = (key) =>
 		dataRDW.some((obj) => Object.keys(obj).includes(key));
 
