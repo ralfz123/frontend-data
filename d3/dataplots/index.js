@@ -10,16 +10,19 @@ const selectedColumn = 'chargingpointcapacity';
 
 // Fetching data - API
 fetchingData(endpointOne).then((dataRDW) => {
-	const getCapacityArray = newDataArray(dataRDW, selectedColumn);
-	console.log('Charging Capacity is:', getCapacityArray);
+	const getChargingCapacityArray = newDataArray(dataRDW, selectedColumn);
+	console.log('Charging Capacity is:', getChargingCapacityArray);
 
-	// Checks if array has a unique key
-	let checkKeyPresenceInArray = (key) =>
-		dataRDW.some((obj) => Object.keys(obj).includes(key));
+	// Checks if the unique key is present - Sam was helping me
+	const key = 'maximumvehicleheight';
+	let missing = false;
 
-	var isKeyPresent = checkKeyPresenceInArray('maximumvehicleheight');
-
-	console.log(isKeyPresent);
+	for (let i of dataRDW) {
+		if (!i[key]) {
+			missing = true;
+		}
+	}
+	console.log(key, "is missing:", missing);
 });
 
 // Receiving data using fetch()
