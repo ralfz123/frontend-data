@@ -9,6 +9,7 @@ const endpointTwo = ('../data/dataEve.json'); // Data from a Eve - 20:00h
 const statusAvailable = 'available'; // Available Charging points 
 const statusCharging = 'charging'; // Busy Charging points 
 
+
 // Fetching data
 // Receiving data using fetch()
 async function fetchingData(url) {
@@ -18,8 +19,6 @@ async function fetchingData(url) {
 		return data; // Return the JSON data
 	}
 
-fetchingData(endpointOne);
-console.log(data)
 
 // Checks if the unique key is present - Sam was helping me
 	// const key = 'maximumvehicleheight';
