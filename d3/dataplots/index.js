@@ -6,6 +6,7 @@
 
 const endpointOne = ('../data/dataDay.json'); // Data from a Day - 08:00h
 const endpointTwo = ('../data/dataEve.json'); // Data from a Eve - 20:00h
+
 const statusAvailable = 'available'; // Available Charging points 
 const statusCharging = 'charging'; // Busy Charging points 
 
@@ -18,6 +19,13 @@ async function fetchingData(url) {
 		console.log(data)
 		return data; // Return the JSON data
 	}
+	// const getData = fetchingData(endpointOne)
+	// .then (data => {
+		// console.log(data))
+	// }
+	
+	const getData = fetchingData(endpointOne)
+	console.log(getData[0])
 
 
 // Checks if the unique key is present - Sam was helping me
