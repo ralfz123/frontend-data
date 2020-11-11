@@ -8,18 +8,10 @@ const selectedColumn = 'areaid';
 fetchingData(endpointOne).then((dataRDW) => {
 	const getAreaIdArray = newStringDataArray(dataRDW, selectedColumn);
 	const getCapacityArray = newDataArray(dataRDW, 'capacity');
-	// const uniqueUsageValue = listUnique(getAreaIdArray);
 	console.log('AreaId is:', getAreaIdArray);
 	console.log('Charging Capacity is:', getCapacityArray);
-	// console.log('unique', uniqueUsageValue);
-
-	// const emptyStringsInAreas = countValuesInArray(getAreaIdArray, '');
-	// console.log('empty strings in area', emptyStringsInAreas);
-	// return getUsageIdArray;
+	
 });
-//   .then((getUsageIdArray) => {
-//     processData(getUsageIdArray);
-//   });
 
 // Receiving data using fetch()
 async function fetchingData(url) {
@@ -67,4 +59,3 @@ function newStringDataArray(dataArray, key) {
 
 // Combine datasets
 //    - Filter out which columns I do not use
-//
