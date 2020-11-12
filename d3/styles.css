@@ -36,7 +36,7 @@ body .dashboard .legenda {
 	flex-wrap: wrap;
     flex-direction: row;
 	margin-top: 50px;
-	max-width: 30vw;
+	max-width: 12vw;
 }
 
 body .dashboard .legenda > div {
@@ -48,11 +48,13 @@ body .dashboard .legenda > div {
 .legenda-circle-1 {
 	background-color: rgb(175, 11, 11);
 	border: 3px solid rgb(175, 11, 11);
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .legenda-circle-2 {
 	background-color: rgb(7, 160, 7);
 	border: 3px solid rgb(7, 160, 7);
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .legenda-circle-3 {

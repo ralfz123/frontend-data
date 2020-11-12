@@ -23,11 +23,12 @@
     const path = d3__default.geoPath();
     const zoom = d3__default.zoom().scaleExtent([1, 8]).on('zoom', zoomed);
     
-    const width = 975;
+    const width = 1250;
   	const height = 610;
 
   	const svg = d3__default.select("svg")
-        .attr("viewBox", [0, 0, width, height])
+        // .attr("viewBox", [0, 0, width, height])
+        .attr("viewBox", [-200, -20, width, height])
         .on("click", reset);
   	
     
