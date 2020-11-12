@@ -34,6 +34,9 @@ I want to make a data visualization, using D3, to show the reader how 'ideal' th
 
 <img src="https://raw.githubusercontent.com/wiki/ralfz123/functional-programming/img/sketch_v5.jpg" alt="first-sketch" width="600px">
 
+### [Live version now](https://ralfz123.github.io/frontend-data/d3/index.html)
+<img src="https://raw.githubusercontent.com/wiki/ralfz123/functional-programming/img/live-version-v1.png" alt="first-sketch" width="800px">
+
 ## :1234: Data  
 I think I can use [this data](https://github.com/ralfz123/functional-programming/wiki/Onderzoek-%F0%9F%94%8D#data) for my subject.
 The data variables I think I can use, are:
