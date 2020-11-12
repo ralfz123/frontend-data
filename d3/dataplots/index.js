@@ -1,4 +1,5 @@
 // This file contains all code that is used for the dataviz, except the code for the map projection ('../projection')
+// shout out to Sam Landsdaal
 
 const endpointOne = '../data/dataDay.json'; // Data from a Day - 08:00h
 const endpointTwo = '../data/dataEve.json'; // Data from a Eve - 20:00h
@@ -8,37 +9,62 @@ const endpointTwo = '../data/dataEve.json'; // Data from a Eve - 20:00h
 
 // Fetching data
 // Receiving data using fetch()
-async function fetchingData(url) {
-	const response = await fetch(url); // Waits till the data is fetched
-	const data = await response.json(); // Waits till the data is formatted to JSON
-	// console.log(data);
-	// dots(data);
-	return data; // Return the JSON data
-}
 
-// Filter option dataviz - On click fetch data to determine which time of day it is
-function handleClick(timeOfDay) {
-	const endpoint = timeOfDay === 'day' ? endpointOne : endpointTwo;
+const dataDay = fetch(endpointOne).then((response) => response.json());
+const dataEve = fetch(endpointTwo).then((response) => response.json());
 
-	fetchingData(endpoint).then((res) => {
-		// console.log(`It's currently ${timeOfDay} time`)
-		// console.log(res.data)
-	});
-}
-
-handleClick('day');
-
-// Get the unique ID's from each datapoint
-fetchingData(endpointOne).then((data) => {
-	// console.log(data.data[0].id)
-	// console.log(data.data[1].status.available)
+Promise.all([dataDay, dataEve]).then((response) => {
+	let [dataset1, dataset2] = response;
+	filteredDataset(dataset1, dataset2);
 });
-const getData = fetchingData(endpointOne).then(console.log);
 
+function filteredDataset(dataDay, dataEve) {
+	const cleanDataDay = dataDay.data.map((element) => {
+		const object = {};
+		object.point = element.point;
+		object.status = element.status;
 
-// *****************************************************************************
+		return object;
+	});
+
+	const cleanDataEve = dataEve.data.map((element) => {
+		const object = {};
+		object.point = element.point;
+		object.status = element.status;
+
+		return object;
+	});
+	console.log(cleanDataDay, cleanDataEve);
+}
+
+// ------------------------------------------------------------------------------------
 
 // Rest functions
+
+// Filter option dataviz - On click fetch data to determine which time of day it is
+// function handleClick(timeOfDay) {
+// 	const endpoint = timeOfDay === 'day' ? endpointOne : endpointTwo;
+
+// 	fetchingData(endpoint).then((res) => {
+// 		console.log(`It's currently ${timeOfDay} time`)
+// 		console.log(res.data)
+// 	});
+// }
+
+// handleClick('day');
+
+// const getColumns = (dataset, columns) => {
+// 	return dataset.map((value) => {
+// 		const data = {};
+
+// 		for (let i = 0; i < columns.length; i++) {
+// 			data[columns[i]] = value[columns[i]];
+// 		}
+// 		return data;
+// 	});
+// };
+
+// getColumns(fetchingData(endpointOne), 'point');
 
 // Combining 2 datasets in one Object
 // async function combineData() {
