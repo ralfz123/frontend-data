@@ -32,7 +32,7 @@ _My assumption is that it will be very difficult for drivers of electric cars in
 ### :bulb: Idea
 I want to make a data visualization, using D3, to show the reader how 'ideal' the life is of an electric car driver who lives in the city while still having to charge his / her car.
 
-<img src="https://raw.githubusercontent.com/wiki/ralfz123/functional-programming/img/sketch_v1.jpg" alt="first-sketch" width="600px">
+<img src="https://raw.githubusercontent.com/wiki/ralfz123/functional-programming/img/sketch_v5.jpg" alt="first-sketch" width="600px">
 
 ## :1234: Data  
 I think I can use [this data](https://github.com/ralfz123/functional-programming/wiki/Onderzoek-%F0%9F%94%8D#data) for my subject.
