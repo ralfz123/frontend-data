@@ -46,14 +46,14 @@ The data variables I think I can use, are:
 ### Dataset structure
 ```
 {
-    "areamanagerid":"599",
-    "areaid":"599_KRZM",
-    "startdatespecifications":"20141101000000",
-    "capacity":"1700",
-    "enddatespecifications":"20991231235959",
-    "chargingpointcapacity":"4",
-    "disabledaccess":"0",
-    "maximumvehicleheight":"0"
+ point: {
+  lat: 52.21061864,
+  lng: 5.17506312
+},
+ id: "28008b58-5a03-11ea-8ed4-42010a840fd0",
+ status: {
+  available: "2",
+  charging: "0"
 }
 ```
 
