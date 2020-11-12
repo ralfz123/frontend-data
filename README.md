@@ -38,11 +38,12 @@ I want to make a data visualization, using D3, to show the reader how 'ideal' th
 <img src="https://raw.githubusercontent.com/wiki/ralfz123/functional-programming/img/live-version-v1.png" alt="first-sketch" width="800px">
 
 ## :1234: Data  
-I think I can use [this data](https://github.com/ralfz123/functional-programming/wiki/Onderzoek-%F0%9F%94%8D#data) for my subject.
+I think I can use [this dataset](https://github.com/ralfz123/frontend-data/wiki/Onderzoek-&-Concept-%F0%9F%94%8D#data) for my subject.
 The data variables I think I can use, are:
-- `AreaId` - [this](https://opendata.rdw.nl/Parkeren/Open-Data-Parkeren-GEBIED/adw6-9hsg) or [this](https://opendata.rdw.nl/Parkeren/Open-Data-Parkeren-GEOMETRIE-GEBIED/nsk3-v9n7)
-- `GeoDataAsText` - [Dataset](https://opendata.rdw.nl/Parkeren/Open-Data-Parkeren-GEOMETRIE-GEBIED/nsk3-v9n7)
-- `ChargingPointCapacity` - [Dataset](https://opendata.rdw.nl/Parkeren/Open-Data-Parkeren-SPECIFICATIES-PARKEERGEBIED/b3us-f26s)
+- `lat`  
+- `lng` 
+- `available`
+- `charging`
 
 👉 Click [here](https://github.com/ralfz123/functional-programming/wiki/Onderzoek-%F0%9F%94%8D) for more details about my project research.
 
@@ -53,7 +54,6 @@ The data variables I think I can use, are:
   lat: 52.21061864,
   lng: 5.17506312
 },
- id: "28008b58-5a03-11ea-8ed4-42010a840fd0",
  status: {
   available: "2",
   charging: "0"
@@ -65,7 +65,7 @@ The data variables I think I can use, are:
 This data visualization will be built, using:
 - JavaScript
 - D3
-- [Functional Programming Patterns](https://github.com/ralfz123/functional-programming/wiki/Functional-Patterns)
+- [Functional Programming Patterns](https://github.com/ralfz123/frontend-data/wiki/Functional-Patterns)
 
 ## :gear: Install
 1. Clone the repository:  
