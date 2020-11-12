@@ -3,11 +3,11 @@ body {
 	padding: 0;
 	box-sizing: border-box;
 	overflow: hidden;
-	background: rgb(53, 68, 102);
+	background: #2b342a;
 }
 
 body .dashboard {
-	background-color: rgb(73, 100, 170);
+	background-color: rgb(138, 163, 135);
 	border-radius: 5px;
 
 	position: absolute;
@@ -30,18 +30,18 @@ body .dashboard .active-framework {
 }
 
 body .dashboard .legenda {
-	border: 1px solid grey;
+	border: .1px solid grey;
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
-    flex-direction: row;
-	margin-top: 50px;
+	flex-direction: row;
+	/* margin-top: 250px; */
 	max-width: 12vw;
 }
 
 body .dashboard .legenda > div {
-	width: 35px;
-	height: 35px;
+	width: 21px;
+	height: 21px;
 	border-radius: 50%;
 }
 
@@ -63,17 +63,25 @@ body .dashboard .legenda > div {
 }
 
 body .dashboard .legenda p {
-  width: 12em;
+	width: 12em;
 }
 
+.sort-option {
+	font-size: 1.3rem;;
+}
+
+.sort-option input {
+	cursor: pointer;
+}
 /* hover state - label */
 label:hover {
 	text-decoration: underline;
 	cursor: pointer;
+	color: rgb(53, 80, 50);
 }
 
 path {
-	fill: rgb(26, 37, 61);
+	fill: rgb(126, 126, 126);
 	stroke: #ffffff;
 	stroke-opacity: 0.1;
 }
@@ -81,7 +89,7 @@ path {
 .meta {
 	font-family: 'Roboto', sans-serif;
 	font-weight: 300;
-	font-size: .9rem;
+	font-size: 0.9rem;
 	color: #f0f0f03a;
 	margin-top: 6em;
 }
