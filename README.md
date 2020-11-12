@@ -93,6 +93,9 @@ http://localhost:8000/
 Credits to [Danny de Vries](https://github.com/dandevri) && [Laurens Aarnoudse](https://github.com/Razpudding) && [Robert Spier](https://github.com/roberrrt-s) for giving interesting lectures about Functional Programming and how to deal with it.
 
 - Aarnoudse, L.  (2020, October 28). Rubric. Consulted from https://github.com/cmda-tt/course-20-21
+- Aarnoudse, L.  (2020, October 28). Slides. Consulted from https://cmda-tt.github.io/course-20-21/slides/
+
+Lots of credits to [Vuurvos1](https://github.com/Vuurvos1) for giving code lectures and examples and helping me with building up a begin.
 
 ## :cop: License
 This project from [Ralf](https://github.com/ralfz123) has a [MIT © License](https://github.com/ralfz123/frontend-data/blob/main/LICENSE)
