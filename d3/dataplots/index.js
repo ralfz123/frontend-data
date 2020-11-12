@@ -1,4 +1,7 @@
 // This file contains all code that is used for the dataviz, except the code for the map projection ('../projection')
+// import {d3, json} from 'd3';
+// import topojson from 'topojson';
+// import nlData from '/nltopo.js';
 
 const endpointOne = '../data/dataDay.json'; // Data from a Day - 08:00h
 const endpointTwo = '../data/dataEve.json'; // Data from a Eve - 20:00h
@@ -11,7 +14,7 @@ const endpointTwo = '../data/dataEve.json'; // Data from a Eve - 20:00h
 const dataDay = fetch(endpointOne).then((response) => response.json()); // Parses JSON data
 const dataEve = fetch(endpointTwo).then((response) => response.json()); // Parses JSON data
 
-// Getting both datasets through an Promise.all (is solved when all promises above get resolved) 
+// Getting both datasets through an Promise.all (is solved when all promises above get resolved)
 Promise.all([dataDay, dataEve]).then((response) => {
 	let [dataset1, dataset2] = response;
 	filteredDataset(dataset1, dataset2);
@@ -34,12 +37,150 @@ function filteredDataset(dataDay, dataEve) {
 
 		return object;
 	});
-	console.log(cleanDataDay, cleanDataEve);
+	let data = [cleanDataDay, cleanDataEve]; // Transforming the terminology to the normal word 'data'
+	console.log('Real data:', data);
+	// }
+	// ------------------------------- D3 MAP below ----------------------------------------------
+	// Thanks for help Rowin Ruizendaal (https://github.com/RowinRuizendaal/frontend-data)
+
+	// Fetch map of The Netherlands via external source
+	function nlData() {
+		return fetch(
+			'https://cartomap.github.io/nl/wgs84/gemeente_2020.topojson'
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				return data;
+			});
+	}
+
+	const dummyData = [
+		{
+			point: {
+				lat: 52.0039482,
+				lng: 4.4426398,
+			},
+		},
+	];
+
+	console.log('Dummy data:', dummyData);
+
+	nlData().then((data) => {
+		const path = d3.geoPath();
+		// const zoom = d3.zoom().scaleExtent([1, 8]).on('zoom', zoomed); // Zoom function
+
+		const width = 975;
+		const height = 610;
+
+		const svg = d3
+			.select('svg')
+			.attr('viewBox', [0, 0, width, height])
+			.on('click', reset);
+
+		const g = svg.append('g');
+
+		const projection = d3
+			.geoMercator()
+			.scale(6000)
+			.center([5.116667, 52.17]);
+		const pathGenerator = path.projection(projection);
+
+		const gemeentes = g
+			.append('g')
+			.attr('fill', '#444')
+			.attr('cursor', 'pointer')
+			.selectAll('path')
+			.data(topojson.feature(data, data.objects.gemeente_2020).features)
+			.join('path')
+			.on('click', clicked)
+			.attr('d', path);
+
+		gemeentes
+			.append('g')
+			.attr(
+				'transform',
+				({ longitude, latitude }) =>
+					`translate(${projection([longitude, latitude]).join(',')})`
+			)
+			.append('circle')
+			.attr('r', 3);
+
+		// console.log("Gemeentes:", gemeentes);
+
+		// svg.call(zoom);
+
+		function reset() {
+			gemeentes.transition().style('fill', null);
+			svg.transition()
+				.duration(750)
+				.call(
+					zoom.transform,
+					d3.zoomIdentity,
+					d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
+				);
+		}
+
+		function clicked(event, d) {
+			const [[x0, y0], [x1, y1]] = path.bounds(d);
+			event.stopPropagation();
+			gemeentes.transition().style('fill', null);
+			d3.select(this).transition().style('fill', 'red');
+			svg.transition()
+				.duration(750)
+				.call(
+					zoom.transform,
+					d3.zoomIdentity
+						.translate(width / 2, height / 2)
+						.scale(
+							Math.min(
+								8,
+								0.9 /
+									Math.max(
+										(x1 - x0) / width,
+										(y1 - y0) / height
+									)
+							)
+						)
+						.translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
+					d3.pointer(event, svg.node())
+				);
+		}
+
+		// Not needing - Zoom function
+		function zoomed(event) {
+			const { transform } = event;
+			g.attr('transform', transform);
+			g.attr('stroke-width', 1 / transform.k);
+		}
+	});
+
+
+	// ------------------------------- D3 DATA PLOTS below ----------------------------------------------
+
+	// Formatter for map plots
+	// ERROR: Uncaught (in promise) ReferenceError: select is not defined
+ 	const g = select('g');
+	const projection = geoMercator().scale(6000).center([5.116667, 52.17]);
+	g.selectAll('circle')
+		.data(data)
+		.enter()
+		.append('circle')
+		.attr('class', 'circles')
+		.attr('cx', function (d) {
+			console.log(projection([d.point.lng, d.point.lat])[0]);
+			return projection([d.point.lng, d.point.lat])[0];
+		})
+		.attr('cy', function (d) {
+			return projection([d.point.lng, d.point.lat])[1];
+		})
+		.attr('r', '4px')
+		.attr('fill', '#e94560')
+		.on('mouseover', handleMouseOver)
+		.on('mousemove', mouseMove)
+		.on('mouseout', handleMouseOut)
+		.on('click', showDetail);
 }
-
-// ------------------------------------------------------------------------------------
-
-// Rest functions
+// ------------------------------- Rest functions below ----------------------------------------------
 
 // Filter option dataviz - On click fetch data to determine which time of day it is
 // function handleClick(timeOfDay) {
