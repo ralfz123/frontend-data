@@ -1,5 +1,4 @@
 // This file contains all code that is used for the dataviz, except the code for the map projection ('../projection')
-// shout out to Sam Landsdaal
 
 const endpointOne = '../data/dataDay.json'; // Data from a Day - 08:00h
 const endpointTwo = '../data/dataEve.json'; // Data from a Eve - 20:00h
@@ -9,15 +8,16 @@ const endpointTwo = '../data/dataEve.json'; // Data from a Eve - 20:00h
 
 // Fetching data
 // Receiving data using fetch()
+const dataDay = fetch(endpointOne).then((response) => response.json()); // Parses JSON data
+const dataEve = fetch(endpointTwo).then((response) => response.json()); // Parses JSON data
 
-const dataDay = fetch(endpointOne).then((response) => response.json());
-const dataEve = fetch(endpointTwo).then((response) => response.json());
-
+// Getting both datasets through an Promise.all (is solved when all promises above get resolved) 
 Promise.all([dataDay, dataEve]).then((response) => {
 	let [dataset1, dataset2] = response;
 	filteredDataset(dataset1, dataset2);
 });
 
+// Clean data - makes new array with needed data variables
 function filteredDataset(dataDay, dataEve) {
 	const cleanDataDay = dataDay.data.map((element) => {
 		const object = {};
