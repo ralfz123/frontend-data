@@ -1,8 +1,4 @@
-// Here comes the data plots code
-
-// API fetch
-// Cleaning data
-// Transforming data
+// This file contains all code that is used for the dataviz, except the code for the map projection ('../projection')
 
 const endpointOne = '../data/dataDay.json'; // Data from a Day - 08:00h
 const endpointTwo = '../data/dataEve.json'; // Data from a Eve - 20:00h
@@ -16,9 +12,35 @@ async function fetchingData(url) {
 	const response = await fetch(url); // Waits till the data is fetched
 	const data = await response.json(); // Waits till the data is formatted to JSON
 	// console.log(data);
+	// dots(data);
 	return data; // Return the JSON data
 }
 
+// Filter option dataviz - On click fetch data to determine which time of day it is
+function handleClick(timeOfDay) {
+	const endpoint = timeOfDay === 'day' ? endpointOne : endpointTwo;
+
+	fetchingData(endpoint).then((res) => {
+		// console.log(`It's currently ${timeOfDay} time`)
+		// console.log(res.data)
+	});
+}
+
+handleClick('day');
+
+// Get the unique ID's from each datapoint
+fetchingData(endpointOne).then((data) => {
+	// console.log(data.data[0].id)
+	// console.log(data.data[1].status.available)
+});
+const getData = fetchingData(endpointOne).then(console.log);
+
+
+// *****************************************************************************
+
+// Rest functions
+
+// Combining 2 datasets in one Object
 // async function combineData() {
 // 	const dayData = await fetchingData(endpointOne)
 // 	const nightData = await fetchingData(endpointTwo)
@@ -28,36 +50,6 @@ async function fetchingData(url) {
 
 // 	// Return the combinedData
 // 	return combined
-// }
-
-// filter option dataviz - On click fetch data to determine which time of day it is
-function handleClick(timeOfDay) {
-	const endpoint = timeOfDay === 'day' ? endpointOne : endpointTwo 
-
-	fetchingData(endpoint).then(res => {
-		console.log(`It's currently ${timeOfDay} time`)
-		console.log(res.data)
-	})
-}
-
-handleClick('day')
-
-// Get the unique ID's from each datapoint
-fetchingData(endpointOne).then((data) => {
-	console.log(data.data[0].id)
-	console.log(data.data[1].id)
-})
-const getData = fetchingData(endpointOne).then(console.log)
-
-// Getting ID's
-//  function findId () {
-// 	return data === "id"
-//  }
-//  console.log(getData.find(findId))
-
-// const getData = fetchingData(endpointOne)
-// .then (data => {
-// console.log(data))
 // }
 
 // Checks if the unique key is present - Sam was helping me

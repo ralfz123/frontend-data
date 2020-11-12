@@ -34,7 +34,7 @@ body .dashboard .legenda {
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
-  flex-direction: row;
+    flex-direction: row;
 	margin-top: 50px;
 }
 
@@ -66,6 +66,7 @@ body .dashboard .legenda p {
 /* hover state - label */
 label:hover {
 	text-decoration: underline;
+	cursor: pointer;
 }
 
 path {
