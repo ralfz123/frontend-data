@@ -1,8 +1,8 @@
 // This file contains all code that is used for the dataviz, except the code for the map projection ('../projection')
 
 // ------------------------------- DATA FETCH below ----------------------------------------------
-const endpointOne = '../../d3/data/dataDay.json'; // Data from a Day - 08:00h
-const endpointTwo = '../../d3/data/dataEve.json'; // Data from a Eve - 20:00h
+const endpointOne = '/data/dataDay.json'; // Data from a Day - 08:00h
+const endpointTwo = '/data/dataEve.json'; // Data from a Eve - 20:00h
 
 // const statusAvailable = 'available'; // Available Charging points
 // const statusCharging = 'charging'; // Busy Charging points
