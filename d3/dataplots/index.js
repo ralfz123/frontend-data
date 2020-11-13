@@ -171,6 +171,7 @@ function filteredDataset(dataDay, dataEve) {
 		}
 	
 		dots(combinedData);
+		console.log("combinedData:", combinedData)
 	});
 
 	// ------------------------------- D3 DATA PLOTS below ----------------------------------------------
@@ -186,16 +187,16 @@ function filteredDataset(dataDay, dataEve) {
 	// console.log(realData[0])
 	
 	g.selectAll('circle')
-		.data(realData)
+		.data(realData[0])
 		.enter()
 		.append('circle')
 		.attr('class', 'circles')
 		.attr('cx', function (d) {
-			console.log(d.point)
-			return projection([d[0].point.lng, d[0].point.lat])[0];
+			console.log(d)
+			return projection([d.point.lng, d.point.lat])[0];
 		})
 		.attr('cy', function (d) {
-			return projection([d[0].point.lng, d[0].point.lat])[1];
+			return projection([d.point.lng, d.point.lat])[1];
 		})
 		.attr('r', '4px')
 		.attr('fill', '#e94560');
