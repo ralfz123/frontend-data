@@ -22,7 +22,7 @@ Promise.all([dataDay, dataEve]).then((response) => {
 
 // Clean data - makes new array with needed data variables
 function filteredDataset(dataDay, dataEve) {
-	const cleanDataDay = dataDay.data.map((element) => {
+	const cleanDataDay = dataDay.map((element) => {
 		const object = {};
 		object.point = element.point;
 		object.status = element.status;
@@ -37,8 +37,8 @@ function filteredDataset(dataDay, dataEve) {
 
 		return object;
 	});
-	let data = [cleanDataDay, cleanDataEve]; // Transforming the terminology to the normal word 'data'
-	console.log('Real data:', data);
+	const combinedData = [cleanDataDay, cleanDataEve]; // Transforming the terminology to the normal word 'data'
+	console.log('Real data:', combinedData);
 	// }
 	// ------------------------------- D3 MAP below ----------------------------------------------
 	// Thanks for help Rowin Ruizendaal (https://github.com/RowinRuizendaal/frontend-data)
@@ -56,9 +56,25 @@ function filteredDataset(dataDay, dataEve) {
 
 	const dummyData = [
 		{
-			point: {
-				lat: 52.0039482,
-				lng: 4.4426398,
+			areamanagerid: '988',
+			areaid: '988_STAT',
+			paymentmethod: 'pin',
+			pricePerHour: '0.00',
+			areadesc: 'Parkeergarage Stationsplein (Weert)',
+			location: {
+				longitude: '5.705462804',
+				latitude: '51.249263663',
+			},
+		},
+		{
+			areamanagerid: '268',
+			areaid: '268_PRNOO',
+			paymentmethod: 'Maestro',
+			pricePerHour: '1.05',
+			areadesc: 'Garage Keizer Karel (Nijmegen)',
+			location: {
+				longitude: '5.857931044',
+				latitude: '51.842372259',
 			},
 		},
 	];
@@ -87,6 +103,7 @@ function filteredDataset(dataDay, dataEve) {
 
 		const gemeentes = g
 			.append('g')
+			.attr('class', 'gemeentes')
 			.attr('fill', '#444')
 			.attr('cursor', 'pointer')
 			.selectAll('path')
@@ -95,15 +112,15 @@ function filteredDataset(dataDay, dataEve) {
 			.on('click', clicked)
 			.attr('d', path);
 
-		gemeentes
-			.append('g')
-			.attr(
-				'transform',
-				({ longitude, latitude }) =>
-					`translate(${projection([longitude, latitude]).join(',')})`
-			)
-			.append('circle')
-			.attr('r', 3);
+		// gemeentes
+		// 	.append('g')
+		// 	.attr(
+		// 		'transform',
+		// 		({ lng, lat }) =>
+		// 			`translate(${projection([lng, lat]).join(',')})`
+		// 	)
+		// 	.append('circle')
+		// 	.attr('r', 3);
 
 		// console.log("Gemeentes:", gemeentes);
 
@@ -114,7 +131,7 @@ function filteredDataset(dataDay, dataEve) {
 			svg.transition()
 				.duration(750)
 				.call(
-					zoom.transform,
+					d3.zoom.transform,
 					d3.zoomIdentity,
 					d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
 				);
@@ -152,33 +169,41 @@ function filteredDataset(dataDay, dataEve) {
 			g.attr('transform', transform);
 			g.attr('stroke-width', 1 / transform.k);
 		}
+	
+		dots(combinedData);
 	});
-
 
 	// ------------------------------- D3 DATA PLOTS below ----------------------------------------------
 
 	// Formatter for map plots
-	// ERROR: Uncaught (in promise) ReferenceError: select is not defined
- 	const g = select('g');
-	const projection = geoMercator().scale(6000).center([5.116667, 52.17]);
+	
+
+	function dots (realData) {
+		const g = d3.select('svg')
+		.append('g')
+	   const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
+	// console.log('real data', realData)
+	// console.log(realData[0])
+	
 	g.selectAll('circle')
-		.data(data)
+		.data(realData)
 		.enter()
 		.append('circle')
 		.attr('class', 'circles')
 		.attr('cx', function (d) {
-			console.log(projection([d.point.lng, d.point.lat])[0]);
-			return projection([d.point.lng, d.point.lat])[0];
+			console.log(d.point)
+			return projection([d[0].point.lng, d[0].point.lat])[0];
 		})
 		.attr('cy', function (d) {
-			return projection([d.point.lng, d.point.lat])[1];
+			return projection([d[0].point.lng, d[0].point.lat])[1];
 		})
 		.attr('r', '4px')
-		.attr('fill', '#e94560')
-		.on('mouseover', handleMouseOver)
-		.on('mousemove', mouseMove)
-		.on('mouseout', handleMouseOut)
-		.on('click', showDetail);
+		.attr('fill', '#e94560');
+	// .on('mouseover', handleMouseOver)
+	// .on('mousemove', mouseMove)
+	// .on('mouseout', handleMouseOut)
+	// .on('click', showDetail);
+	}
 }
 // ------------------------------- Rest functions below ----------------------------------------------
 

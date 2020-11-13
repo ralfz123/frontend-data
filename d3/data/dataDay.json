@@ -1,7 +1,4 @@
-{
-   "status_code": 1000,
-   "status_message": "OK",
-   "data": [
+[
       {
          "point": {
             "lat": 52.21061864,
@@ -2511,15 +2508,4 @@
          "power": 11040,
          "publicaccess": "Public"
       }
-   ],
-   "meta": {
-      "chunk": {
-         "offset": 0,
-         "limit": 999999,
-         "count": 193,
-         "min": 0,
-         "max": 0,
-         "next": null
-      }
-   }
-}
+   ]
