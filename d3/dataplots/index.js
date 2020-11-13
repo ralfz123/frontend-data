@@ -95,7 +95,7 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 
 	nlData().then((data) => {
 		const path = d3.geoPath();
-		// const zoom = d3.zoom().scaleExtent([1, 8]).on('zoom', zoomed); // Zoom function
+		const zoom = d3.zoom().scaleExtent([1, 10]).on('zoom', zoomed); // Zoom function
 
 		const width = 975;
 		const height = 610;
@@ -136,7 +136,7 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 
 		// console.log("Gemeentes:", gemeentes);
 
-		// svg.call(zoom);
+		svg.call(zoom);
 
 		function reset() {
 			gemeentes.transition().style('fill', null);
@@ -191,27 +191,27 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 
 	// Formatter for map plots
 	function dots (realData) {
-		const g = d3.select('svg')
-		.append('g')
+		const g = d3.select('g')
+		// .append('g')
 	   const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
 		// console.log(realData[2])
 	
 	g.selectAll('circle')
 		// .data(realData[0])
-		.data(realData[2])
+		.data(realData[0])
 		.enter()
 		.append('circle')
 		.attr('class', 'circles')
 		.attr('cx', function (d) {
 			console.log(d)
-			// return projection([d.point.lng, d.point.lat])[0];
-			return projection([d.location.longitude, d.location.latitude])[0];
+			return projection([d.point.lng, d.point.lat])[0];
+			// return projection([d.location.longitude, d.location.latitude])[0];
 		})
 		.attr('cy', function (d) {
-			// return projection([d.point.lng, d.point.lat])[1];
-			return projection([d.location.longitude, d.location.latitude])[1];
+			return projection([d.point.lng, d.point.lat])[1];
+			// return projection([d.location.longitude, d.location.latitude])[1];
 		})
-		.attr('r', '2px')
+		.attr('r', '.5px')
 		.attr('fill', '#25c91c');
 	// .on('mouseover', handleMouseOver)
 	// .on('mousemove', mouseMove)
