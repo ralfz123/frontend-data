@@ -1,11 +1,8 @@
 // This file contains all code that is used for the dataviz, except the code for the map projection ('../projection')
-// import {d3, json} from 'd3';
-// import topojson from 'topojson';
-// import nlData from '/nltopo.js';
 
+// ------------------------------- DATA FETCH below ----------------------------------------------
 const endpointOne = '../data/dataDay.json'; // Data from a Day - 08:00h
 const endpointTwo = '../data/dataEve.json'; // Data from a Eve - 20:00h
-const endpointThree = '../data/dataRDW.json';
 
 // const statusAvailable = 'available'; // Available Charging points
 // const statusCharging = 'charging'; // Busy Charging points
@@ -14,12 +11,11 @@ const endpointThree = '../data/dataRDW.json';
 // Receiving data using fetch()
 const dataDay = fetch(endpointOne).then((response) => response.json()); // Parses JSON data
 const dataEve = fetch(endpointTwo).then((response) => response.json()); // Parses JSON data
-const dataCharging = fetch(endpointThree).then((response) => response.json()); // Parses JSON data
 
 // Getting both datasets through an Promise.all (is solved when all promises above get resolved)
-Promise.all([dataDay, dataEve, dataCharging]).then((response) => {
-	let [dataset1, dataset2, dataset3] = response;
-	filteredDataset(dataset1, dataset2, dataset3);
+Promise.all([dataDay, dataEve]).then((response) => {
+	let [dataset1, dataset2] = response;
+	filteredDataset(dataset1, dataset2);
 });
 
 // Clean data - makes new array with needed data variables
@@ -40,18 +36,9 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 		return object;
 	});
 
-	const cleanDataRDW = dataRDW.map((element) => {
-		const object = {};
-		object.location = element.location;
-		// object.status = element.status;
-
-		return object;
-	});
-
-	const combinedData = [cleanDataDay, cleanDataEve, cleanDataRDW]; // Transforming the terminology to the normal word 'data'
+	const combinedData = [cleanDataDay, cleanDataEve]; // Transforming the terminology to the normal word 'data'
 	console.log('Real data:', combinedData);
 
-	// }
 	// ------------------------------- D3 MAP below ----------------------------------------------
 	// Thanks for help Rowin Ruizendaal (https://github.com/RowinRuizendaal/frontend-data)
 
@@ -65,33 +52,6 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 				return data;
 			});
 	}
-
-	// const dummyData = [
-	// 	{
-	// 		areamanagerid: '988',
-	// 		areaid: '988_STAT',
-	// 		paymentmethod: 'pin',
-	// 		pricePerHour: '0.00',
-	// 		areadesc: 'Parkeergarage Stationsplein (Weert)',
-	// 		location: {
-	// 			longitude: '5.705462804',
-	// 			latitude: '51.249263663',
-	// 		},
-	// 	},
-	// 	{
-	// 		areamanagerid: '268',
-	// 		areaid: '268_PRNOO',
-	// 		paymentmethod: 'Maestro',
-	// 		pricePerHour: '1.05',
-	// 		areadesc: 'Garage Keizer Karel (Nijmegen)',
-	// 		location: {
-	// 			longitude: '5.857931044',
-	// 			latitude: '51.842372259',
-	// 		},
-	// 	},
-	// ];
-
-	// console.log('Dummy data:', dummyData);
 
 	nlData().then((data) => {
 		const path = d3.geoPath();
@@ -192,9 +152,7 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 	// Formatter for map plots
 	function dots (realData) {
 		const g = d3.select('g')
-		// .append('g')
 	   const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
-		// console.log(realData[2])
 	
 	g.selectAll('circle')
 		// .data(realData[0])
@@ -205,11 +163,9 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 		.attr('cx', function (d) {
 			console.log(d)
 			return projection([d.point.lng, d.point.lat])[0];
-			// return projection([d.location.longitude, d.location.latitude])[0];
 		})
 		.attr('cy', function (d) {
 			return projection([d.point.lng, d.point.lat])[1];
-			// return projection([d.location.longitude, d.location.latitude])[1];
 		})
 		.attr('r', '.5px')
 		.attr('fill', '#25c91c');
