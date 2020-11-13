@@ -30,7 +30,7 @@ function filteredDataset(dataDay, dataEve) {
 		return object;
 	});
 
-	const cleanDataEve = dataEve.data.map((element) => {
+	const cleanDataEve = dataEve.map((element) => {
 		const object = {};
 		object.point = element.point;
 		object.status = element.status;
