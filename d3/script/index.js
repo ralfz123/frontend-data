@@ -163,7 +163,7 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 		.attr('class', 'circles')
 		.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
 		.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
-		.attr('class', function filter(d) {
+		.attr('class', function filter(d) { // RE-USABILITY? Transform to universal code
 			if (Number(d.status.available) > 0) {
 				return 'availableValue'
 			} else if (Number(d.status.charging) > 0) {
@@ -177,8 +177,26 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 	// .on('mousemove', mouseMove)
 	// .on('mouseout', handleMouseOut)
 	// .on('click', showDetail);
-	}
-}
+	// }
+
+	const filterOptions = d3.select('.filter-option')
+	.select('input#day')
+	.on("click", function clicking() {
+		console.log('clicked')
+		updatemap(realData)
+	  })
+	// .enter()
+	// .on('change', (i) => {
+	// 	updatemap(i);
+	// })
+	
+	// Filter the data and make a new array with the filtered data
+	function updatemap(data) {
+	 const availableValues = data.filter(function(d){ return Number(d[0].status.available) > 0 })
+	 console.log(availableValues)
+	//  reassignDots(availableValues);
+   }
+}}
 // ------------------------------- Rest functions below ----------------------------------------------
 
 // Filter option dataviz - On click fetch data to determine which time of day it is
