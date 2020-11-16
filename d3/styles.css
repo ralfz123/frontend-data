@@ -66,15 +66,23 @@ body .dashboard .legenda p {
 	width: 12em;
 }
 
-.sort-option {
-	font-size: 1.3rem;
+.sort-option h5 {
+	margin: auto;
+	margin-top: 1em ;
+	margin-bottom: 1em;
+	font-size: 1rem;
 }
 
 .sort-option input {
 	cursor: pointer;
 }
+
+.sort-option label {
+	font-size: 1rem;
+}
+
 /* hover state - label */
-label:hover {
+.sort-option label:hover {
 	text-decoration: underline;
 	cursor: pointer;
 	color: rgb(53, 80, 50);

@@ -71,6 +71,7 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 			.geoMercator()
 			.scale(6000)
 			.center([5.116667, 52.17]);
+			// .center([52.206720, 5.154676]);
 		const pathGenerator = path.projection(projection);
 
 		const gemeentes = g
@@ -153,9 +154,9 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 	function dots (realData) {
 		const g = d3.select('g')
 	   const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
+	// const projection = d3.geoMercator().scale(6000).center([52.206720, 5.154676]); // hilversum central point
 	
 	g.selectAll('circle')
-		// .data(realData)
 		.data(realData[0])
 		.enter()
 		.append('circle')

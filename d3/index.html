@@ -18,16 +18,31 @@
 		<div class="dashboard">
 			<h1>Wat is het verschil qua drukte van elektrisch laden tussen dag en avond?</h1>
 			<!-- <h3>Ideale plek woonbuurt voor elektrische bestuurder</h3> -->
-			<h3>Je kan door te filteren een overzicht zien van alle laadpalen overdag of 's avonds.</h3>
+			<h3>Je kan door te filteren een overzicht zien van alle laadpalen per parkeergebied overdag of 's avonds.</h3>
 			
 
 			<!-- Has to filter the data in day OR eve -->
 			<div class="sort-option">
-				<input type="radio" id="day" value="day" name="daytime" checked="checked" />
-				<label for="day">Overdag</label>
+				<h2>Filteren</h2>
+				<div>
+					<h5>Moment van de dag</h5>
+					<!-- Day or Eve -->
+					<input type="radio" id="day" value="day" name="daytime" checked="checked" />
+					<label for="day">Overdag</label>
+	
+					<input type="radio" id="eve" value="eve" name="daytime" />
+					<label for="eve">'s Avonds</label>
+				</div>
+				
+				<div>
+					<h5>Status laadpalen</h5>
+					<!-- Available or Charging -->
+					<input type="radio" id="available" value="available" name="availability" checked="checked" />
+					<label for="available">Beschikbaar</label>
 
-				<input type="radio" id="eve" value="eve" name="daytime" />
-				<label for="eve">'s Avonds</label>
+					<input type="radio" id="busy" value="busy" name="availability" />
+					<label for="busy">Bezet</label>
+				</div>
 			</div>
 
 			<!-- Legenda -->
