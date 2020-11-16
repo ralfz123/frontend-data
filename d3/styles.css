@@ -30,7 +30,7 @@ body .dashboard .active-framework {
 }
 
 body .dashboard .legenda {
-	border: .1px solid grey;
+	border: 0.1px solid grey;
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
@@ -67,7 +67,7 @@ body .dashboard .legenda p {
 }
 
 .sort-option {
-	font-size: 1.3rem;;
+	font-size: 1.3rem;
 }
 
 .sort-option input {
@@ -92,4 +92,19 @@ path {
 	font-size: 0.9rem;
 	color: #f0f0f03a;
 	margin-top: 6em;
+}
+
+.availableValue {
+	fill: rgba(34, 219, 13, 0.349);
+	stroke: rgb(34, 219, 13);
+}
+
+.chargingValue {
+	fill: rgba(131, 10, 10, 0.753);
+	stroke: rgb(179, 0, 0);
+}
+
+.no-chargingpoint {
+	fill: black;
+	stroke: orange;
 }

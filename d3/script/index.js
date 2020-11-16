@@ -155,20 +155,23 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 	   const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
 	
 	g.selectAll('circle')
-		// .data(realData[0])
+		// .data(realData)
 		.data(realData[0])
 		.enter()
 		.append('circle')
 		.attr('class', 'circles')
-		.attr('cx', function (d) {
-			console.log(d)
-			return projection([d.point.lng, d.point.lat])[0];
-		})
-		.attr('cy', function (d) {
-			return projection([d.point.lng, d.point.lat])[1];
+		.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
+		.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
+		.attr('class', function filter(d) {
+			if (Number(d.status.available) > 0) {
+				return 'availableValue'
+			} else if (Number(d.status.charging) > 0) {
+				return 'chargingValue'
+			} else { // Find another methode to 'delete'/.exit() these values
+				return 'no-chargingpoint'
+			}
 		})
 		.attr('r', '.5px')
-		.attr('fill', '#25c91c');
 	// .on('mouseover', handleMouseOver)
 	// .on('mousemove', mouseMove)
 	// .on('mouseout', handleMouseOut)
