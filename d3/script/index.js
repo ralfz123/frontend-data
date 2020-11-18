@@ -19,7 +19,7 @@ Promise.all([dataDay, dataEve]).then((response) => {
 });
 
 // Clean data - makes new array with needed data variables
-function filteredDataset(dataDay, dataEve, dataRDW) {
+function filteredDataset(dataDay, dataEve) {
 	const cleanDataDay = dataDay.map((element) => {
 		const object = {};
 		object.point = element.point;
@@ -146,6 +146,7 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 		dots(combinedData);
 		// console.log("combinedData:", combinedData)
 		// dots(dataCharging)
+		
 	});
 
 	// ------------------------------- D3 DATA PLOTS below ----------------------------------------------
@@ -181,22 +182,24 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 
 	// Update pattern for the data plots after a clicked filterbutton
 	function reassignDots(data) {
-		const dots = g.selectAll('circle')
-						.data(data)
-		
+		const dots = g.selectAll('circle') 
+						.data(data) // Assign new data to the dots
+
+		// Assign the coordinates to the plots
 		dots
 			.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
 			.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
 		
-		dots.enter()
-			.append('circle')
-			.attr('r', '.2px')
-			.attr('fill', 'blue')
-			.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
-			.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
+		// dots.enter()
+		// 	.append('circle')
+		// 	console.log(dots)
+		// 	.attr('r', '.2px')
+		// 	.attr('fill', 'blue')
+		// 	.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
+		// 	.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
 
-		dots.exit()
-				.remove()
+		// dots.exit()
+		// 		.remove()
 	}
 	
 	// Filter buttons in markup
@@ -217,18 +220,18 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 	// });
 
 	// // Filteroption "Overdag"
-	// d3.select('input#day')
-	// .on("click", function clicking() {
-	// 	console.log('"Day" clicked')
-	// 	// updatingMap(realData[0]) // Day data
-	// });
+	d3.select('input#day')
+	.on("click", function clicking() {
+		console.log('"Day" clicked')
+		handleClickTimeOfDay("day") // Day data
+	});
 
 	// // Filteroption "'s Avonds"
-	// d3.select('input#eve')
-	// .on("click", function clicking() {
-	// 	console.log('"Eve" clicked')
-	// 	// updatingMap(realData[1]) // Eve data switch
-	// });
+	d3.select('input#eve')
+	.on("click", function clicking() {
+		console.log('"Eve" clicked')
+		handleClickTimeOfDay("eve") // Eve data switch
+		});
 
 	// Filter the data and make a new array with the filtered data
 	function updatingMap(data) {
@@ -242,18 +245,38 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 	// 	.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
 	// 	.attr('fill', "blue")
 	}
+
+	// Filter option dataviz - On click fetch data to determine which time of day it is
+	function handleClickTimeOfDay(timeOfDay) {
+		// const endpoint = timeOfDay === 'day' ? endpointOne : endpointTwo;
+		// const plots = timeOfDay === 'day' ? realData[0] : realData[1];
+
+		if (timeOfDay === 'day') {
+			console.log("This is DAY", realData[0])
+			return dots(realData[0]);
+		} else {
+			console.log("This is EVE", realData[1])
+			return dots(realData[1]);
+		}
+		
+		// ?! When multiple clicks on button, then: d3.v6.min.js:2 Uncaught TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+
+		// filteredDataset(endpoint).then((res) => {
+		// 	console.log(`It's currently ${timeOfDay} time`)
+		// 	console.log(res.data)
+		// });
+	
+		// dots(realData[1]);
+		// console.log(realData[1])
+	
+	
+	}
+
+
 }}
 // ------------------------------- Rest functions below ----------------------------------------------
 
-// Filter option dataviz - On click fetch data to determine which time of day it is
-// function handleClick(timeOfDay) {
-// 	const endpoint = timeOfDay === 'day' ? endpointOne : endpointTwo;
 
-// 	fetchingData(endpoint).then((res) => {
-// 		console.log(`It's currently ${timeOfDay} time`)
-// 		console.log(res.data)
-// 	});
-// }
 
 // handleClick('day');
 
