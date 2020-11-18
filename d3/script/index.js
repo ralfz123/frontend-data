@@ -168,9 +168,11 @@ function filteredDataset(dataDay, dataEve) {
 		.attr('class', function filter(d) { // RE-USABILITY? Transform to universal code
 			if (Number(d.status.available) > 0) {
 				return 'availableValue'
-			} else if (Number(d.status.charging) > 0) {
+			} 
+			else if (Number(d.status.charging) > 0) {
 				return 'chargingValue'
-			} else { // Find another methode to 'delete'/.exit() these values
+			} 
+			else { // Find another methode to 'delete'/.exit() these values
 				return 'no-chargingpoint'
 			}
 		})
@@ -185,22 +187,17 @@ function filteredDataset(dataDay, dataEve) {
 		const dots = g.selectAll('circle') 
 						.data(data) // Assign new data to the dots
 
-		// Assign the coordinates to the plots
-		dots
+		// Removes not-needed dots
+		dots.exit().remove()
+		
+		// Makes new plots - does not work
+		dots.enter()
+			.append('circle')
+			.attr('r', '.2px')
+			.attr('fill', 'blue')
 			.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
 			.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
-		
-		// dots.enter()
-		// 	.append('circle')
-		// 	console.log(dots)
-		// 	.attr('r', '.2px')
-		// 	.attr('fill', 'blue')
-		// 	.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
-		// 	.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
-
-		// dots.exit()
-		// 		.remove()
-	}
+		}
 	
 	// Filter buttons in markup
 	const filterOptions = d3.select('.filter-option')
@@ -213,11 +210,11 @@ function filteredDataset(dataDay, dataEve) {
 	});
 	
 	// Filteroption "Bezet"
-	// d3.select('input#busy')
-	// .on("click", function clicking() {
-	// 	console.log('"Busy" clicked')
-	// 	// updatingMap(realData[0])
-	// });
+	d3.select('input#busy')
+	.on("click", function clicking() {
+		// console.log('"Busy" clicked')
+		// updatingMap(realData[0])
+	});
 
 	// // Filteroption "Overdag"
 	d3.select('input#day')
@@ -238,15 +235,9 @@ function filteredDataset(dataDay, dataEve) {
 	 const availableValues = data.filter(function(d){ return Number(d.status.available) > 0 })
 	 console.log("Filtered values (beschikbaar): ", availableValues)
 	 reassignDots(availableValues)
-
-	// g.selectAll('circle')
-	// .data(availableValues)
-	// 	.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
-	// 	.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
-	// 	.attr('fill', "blue")
 	}
 
-	// Filter option dataviz - On click fetch data to determine which time of day it is
+	// Filter option Time Of Day - On click choose dataset to determine which time of day it is
 	function handleClickTimeOfDay(timeOfDay) {
 		// const endpoint = timeOfDay === 'day' ? endpointOne : endpointTwo;
 		// const plots = timeOfDay === 'day' ? realData[0] : realData[1];
