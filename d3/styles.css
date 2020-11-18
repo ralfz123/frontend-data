@@ -57,11 +57,6 @@ body .dashboard .legenda > div {
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
-.legenda-circle-3 {
-	background-color: none;
-	border: 2px dashed orange;
-}
-
 body .dashboard .legenda p {
 	width: 12em;
 }

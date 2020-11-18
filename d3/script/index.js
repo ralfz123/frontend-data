@@ -37,7 +37,7 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 	});
 
 	const combinedData = [cleanDataDay, cleanDataEve]; // Transforming the terminology to the normal word 'data'
-	console.log('Real data:', combinedData);
+	// console.log('Real data:', combinedData);
 
 	// ------------------------------- D3 MAP below ----------------------------------------------
 	// Thanks for help Rowin Ruizendaal (https://github.com/RowinRuizendaal/frontend-data)
@@ -55,7 +55,7 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 
 	nlData().then((data) => {
 		const path = d3.geoPath();
-		const zoom = d3.zoom().scaleExtent([1, 10]).on('zoom', zoomed); // Zoom function
+		const zoom = d3.zoom().scaleExtent([1, 30]).on('zoom', zoomed); // Zoom function
 
 		const width = 975;
 		const height = 610;
@@ -153,16 +153,17 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 	// Formatter for map plots
 	function dots (realData) {
 		const g = d3.select('g')
-	   const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
-	// const projection = d3.geoMercator().scale(6000).center([52.206720, 5.154676]); // hilversum central point
+		const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
 	
-	g.selectAll('circle')
+		g.selectAll('circle')
 		.data(realData[0])
 		.enter()
 		.append('circle')
-		.attr('class', 'circles')
 		.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
 		.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
+		.attr('r', '.2px')
+		
+		// Assign classes to datapoints due charging availability
 		.attr('class', function filter(d) { // RE-USABILITY? Transform to universal code
 			if (Number(d.status.available) > 0) {
 				return 'availableValue'
@@ -172,30 +173,75 @@ function filteredDataset(dataDay, dataEve, dataRDW) {
 				return 'no-chargingpoint'
 			}
 		})
-		.attr('r', '.5px')
 	// .on('mouseover', handleMouseOver)
 	// .on('mousemove', mouseMove)
 	// .on('mouseout', handleMouseOut)
 	// .on('click', showDetail);
 	// }
 
-	const filterOptions = d3.select('.filter-option')
-	.select('input#day')
-	.on("click", function clicking() {
-		console.log('clicked')
-		updatemap(realData)
-	  })
-	// .enter()
-	// .on('change', (i) => {
-	// 	updatemap(i);
-	// })
+	// Update pattern for the data plots after a clicked filterbutton
+	function reassignDots(data) {
+		const dots = g.selectAll('circle')
+						.data(data)
+		
+		dots
+			.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
+			.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
+		
+		dots.enter()
+			.append('circle')
+			.attr('r', '.2px')
+			.attr('fill', 'blue')
+			.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
+			.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
+
+		dots.exit()
+				.remove()
+	}
 	
+	// Filter buttons in markup
+	const filterOptions = d3.select('.filter-option')
+	
+	// Filteroption "Beschikbaar"
+	.select('input#available')
+	.on("click", function clicking() {
+		console.log('"Available" clicked')
+		updatingMap(realData[0])
+	});
+	
+	// Filteroption "Bezet"
+	// d3.select('input#busy')
+	// .on("click", function clicking() {
+	// 	console.log('"Busy" clicked')
+	// 	// updatingMap(realData[0])
+	// });
+
+	// // Filteroption "Overdag"
+	// d3.select('input#day')
+	// .on("click", function clicking() {
+	// 	console.log('"Day" clicked')
+	// 	// updatingMap(realData[0]) // Day data
+	// });
+
+	// // Filteroption "'s Avonds"
+	// d3.select('input#eve')
+	// .on("click", function clicking() {
+	// 	console.log('"Eve" clicked')
+	// 	// updatingMap(realData[1]) // Eve data switch
+	// });
+
 	// Filter the data and make a new array with the filtered data
-	function updatemap(data) {
-	 const availableValues = data.filter(function(d){ return Number(d[0].status.available) > 0 })
-	 console.log(availableValues)
-	//  reassignDots(availableValues);
-   }
+	function updatingMap(data) {
+	 const availableValues = data.filter(function(d){ return Number(d.status.available) > 0 })
+	 console.log("Filtered values (beschikbaar): ", availableValues)
+	 reassignDots(availableValues)
+
+	// g.selectAll('circle')
+	// .data(availableValues)
+	// 	.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
+	// 	.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
+	// 	.attr('fill', "blue")
+	}
 }}
 // ------------------------------- Rest functions below ----------------------------------------------
 
