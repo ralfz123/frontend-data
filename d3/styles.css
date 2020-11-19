@@ -16,7 +16,6 @@ body .dashboard {
 	margin: 1em;
 	margin-left: 0.5em;
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.39);
-
 	font-family: 'Roboto', sans-serif;
 	font-weight: 300;
 }
@@ -48,14 +47,12 @@ body .dashboard .legenda > div {
 .legenda-circle-1 {
 	background-color: rgba(201, 14, 14, 0.753);
 	border: 3px solid rgb(179, 0, 0);
-
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .legenda-circle-2 {
 	background-color: rgba(34, 219, 13, 0.685);
 	border: 3px solid rgb(34, 219, 13);
-
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -97,19 +94,4 @@ path {
 	font-size: 0.9rem;
 	color: #f0f0f03a;
 	margin-top: 6em;
-}
-
-.availableValue {
-	fill: rgba(34, 219, 13, 0.349);
-	stroke: rgb(34, 219, 13);
-}
-
-.chargingValue {
-	fill: rgba(201, 14, 14, 0.753);
-	stroke: rgb(179, 0, 0);
-}
-
-.no-chargingpoint {
-	fill: black;
-	stroke: orange;
 }
