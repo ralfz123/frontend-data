@@ -163,40 +163,39 @@ function filteredDataset(dataDay, dataEve) {
 		.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
 		.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
 		.attr('r', '.2px')
-		
+		.attr('class', 'circle')
+		.attr('fill', 'blue')
 		// Assign classes to datapoints due charging availability
-		.attr('class', function filter(d) { // RE-USABILITY? Transform to universal code
-			if (Number(d.status.available) > 0) {
-				return 'availableValue'
-			} 
-			else if (Number(d.status.charging) > 0) {
-				return 'chargingValue'
-			} 
-			else { // Find another methode to 'delete'/.exit() these values
-				return 'no-chargingpoint'
-			}
-		})
-	// .on('mouseover', handleMouseOver)
-	// .on('mousemove', mouseMove)
-	// .on('mouseout', handleMouseOut)
-	// .on('click', showDetail);
-	// }
+		// .attr('class', function filter(d) { 
+		// 	if ((Number(d.status.available) > 0) && (Number(d.status.charging) >= 0) ) {
+		// 		return 'availableValue'
+		// 	} 
+		// 	else {
+		// 		return 'chargingValue'
+		// 	} 
+		// })
 
 	// Update pattern for the data plots after a clicked filterbutton
-	function reassignDots(data) {
+	function reassignDots(data, color, strokeColor) {
 		const dots = g.selectAll('circle') 
 						.data(data) // Assign new data to the dots
 
-		// Removes not-needed dots
-		dots.exit().remove()
-		
-		// Makes new plots - does not work
+		dots
+			.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
+			.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
+			.attr('fill', color)
+			.attr('stroke', strokeColor)
+
 		dots.enter()
 			.append('circle')
 			.attr('r', '.2px')
-			.attr('fill', 'blue')
+			.attr('fill', color)
+			.attr('stroke', strokeColor)
 			.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
 			.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
+					
+		dots.exit()
+			.remove()
 		}
 	
 	// Filter buttons in markup
@@ -206,62 +205,59 @@ function filteredDataset(dataDay, dataEve) {
 	.select('input#available')
 	.on("click", function clicking() {
 		console.log('"Available" clicked')
-		updatingMap(realData[0])
+		updatingMapAvailable(realData[0])
 	});
 	
 	// Filteroption "Bezet"
 	d3.select('input#busy')
 	.on("click", function clicking() {
-		// console.log('"Busy" clicked')
-		// updatingMap(realData[0])
+		console.log('"Busy" clicked')
+		updatingMapBusy(realData[0])
 	});
 
 	// // Filteroption "Overdag"
-	d3.select('input#day')
-	.on("click", function clicking() {
-		console.log('"Day" clicked')
-		handleClickTimeOfDay("day") // Day data
-	});
+	// d3.select('input#day')
+	// .on("click", function clicking() {
+	// 	console.log('"Day" clicked')
+	// 	handleClickTimeOfDay("day") // Day data
+	// });
 
 	// // Filteroption "'s Avonds"
-	d3.select('input#eve')
-	.on("click", function clicking() {
-		console.log('"Eve" clicked')
-		handleClickTimeOfDay("eve") // Eve data switch
-		});
+	// d3.select('input#eve')
+	// .on("click", function clicking() {
+	// 	console.log('"Eve" clicked')
+	// 	handleClickTimeOfDay("eve") // Eve data switch
+	// 	});
 
-	// Filter the data and make a new array with the filtered data
-	function updatingMap(data) {
-	 const availableValues = data.filter(function(d){ return Number(d.status.available) > 0 })
-	 console.log("Filtered values (beschikbaar): ", availableValues)
-	 reassignDots(availableValues)
+	// Filter data to show available chargingpoints
+	function updatingMapAvailable(data) {
+	const availableValues = data.filter(function(d){ return (Number(d.status.available) > 0) && (Number(d.status.charging) >= 0)})
+	console.log("Beschikbaar:", availableValues)
+	reassignDots(availableValues, "rgba(34, 219, 13, 0.349)", "rgb(34, 219, 13)")
+	}
+	
+	// Filter data to show busy chargingpoints
+	function updatingMapBusy(data) {
+	const chargingValues = data.filter(function(d){ return Number(d.status.charging) > 0 && Number(d.status.available >= 0)})
+	console.log("Bezet:", chargingValues)
+	reassignDots(chargingValues, "rgba(201, 14, 14, 0.753)", "rgb(179, 0, 0)")
 	}
 
 	// Filter option Time Of Day - On click choose dataset to determine which time of day it is
-	function handleClickTimeOfDay(timeOfDay) {
-		// const endpoint = timeOfDay === 'day' ? endpointOne : endpointTwo;
-		// const plots = timeOfDay === 'day' ? realData[0] : realData[1];
+	// function handleClickTimeOfDay(timeOfDay) {
+	// 	// const endpoint = timeOfDay === 'day' ? endpointOne : endpointTwo;
+	// 	// const plots = timeOfDay === 'day' ? realData[0] : realData[1];
 
-		if (timeOfDay === 'day') {
-			console.log("This is DAY", realData[0])
-			return dots(realData[0]);
-		} else {
-			console.log("This is EVE", realData[1])
-			return dots(realData[1]);
-		}
+	// 	if (timeOfDay == 'day') {
+	// 		console.log("This is DAY", realData[0])
+	// 		dots(realData[0]);
+	// 	} else {
+	// 		console.log("This is EVE", realData[1])
+	// 		dots(realData[1]);
+	// 	}
 		
-		// ?! When multiple clicks on button, then: d3.v6.min.js:2 Uncaught TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
-
-		// filteredDataset(endpoint).then((res) => {
-		// 	console.log(`It's currently ${timeOfDay} time`)
-		// 	console.log(res.data)
-		// });
-	
-		// dots(realData[1]);
-		// console.log(realData[1])
-	
-	
-	}
+	// 	// When multiple clicks on button, then: d3.v6.min.js:2 Uncaught TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+	// }
 
 
 }}
