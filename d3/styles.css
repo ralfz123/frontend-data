@@ -30,7 +30,7 @@ body .dashboard .active-framework {
 }
 
 body .dashboard .legenda {
-	border: 0.1px solid grey;
+	/* border: 0.1px solid grey; */
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
@@ -46,14 +46,16 @@ body .dashboard .legenda > div {
 }
 
 .legenda-circle-1 {
-	background-color: rgb(175, 11, 11);
-	border: 3px solid rgb(175, 11, 11);
+	background-color: rgba(201, 14, 14, 0.753);
+	border: 3px solid rgb(179, 0, 0);
+
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .legenda-circle-2 {
-	background-color: rgb(7, 160, 7);
-	border: 3px solid rgb(7, 160, 7);
+	background-color: rgba(34, 219, 13, 0.685);
+	border: 3px solid rgb(34, 219, 13);
+
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -103,7 +105,7 @@ path {
 }
 
 .chargingValue {
-	fill: rgba(131, 10, 10, 0.753);
+	fill: rgba(201, 14, 14, 0.753);
 	stroke: rgb(179, 0, 0);
 }
 
