@@ -177,16 +177,7 @@ function filteredDataset(dataDay, dataEve) {
 		.attr('class', 'circle')
 		.attr('fill', 'rgba(10,10,230,0.623)')
 		.attr('stroke', 'rgb(10,10,235)')
-		// Assign classes to datapoints due charging availability
-		// .attr('class', function filter(d) { 
-		// 	if ((Number(d.status.available) > 0) && (Number(d.status.charging) >= 0) ) {
-		// 		return 'availableValue'
-		// 	} 
-		// 	else {
-		// 		return 'chargingValue'
-		// 	} 
-		// })
-		
+				
 
 	// Update pattern for the data plots after a clicked filterbutton
 	function reassignDots(data, color, strokeColor) {
