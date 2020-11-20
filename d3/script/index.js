@@ -109,7 +109,7 @@ function filteredDataset(dataDay, dataEve) {
 			const [[x0, y0], [x1, y1]] = path.bounds(d);
 			event.stopPropagation();
 			gemeentes.transition().style('fill', null);
-			d3.select(this).transition().style('fill', 'red');
+			d3.select(this).transition().style('fill', 'rgb(107, 105, 105)');
 			svg.transition()
 				.duration(750)
 				.call(
@@ -153,11 +153,19 @@ function filteredDataset(dataDay, dataEve) {
 		g.selectAll('circle')
 		.data(dotData
 		// 	, function(dayTime) {
-		// 	if (dayTime == 'day'){
+
+		// 	let theDayTime = 'day';
+		// 	if (theDayTime == 'day'){
 		// 		console.log("Day clicked", combinedData[0])
-		// 		return combinedData[0];
+		// 		 combinedData[0];
 		// 	} else {
-		// 		return combinedData[1];
+		// 		 combinedData[1];
+		// 	}
+
+		// 	let availability = 'available'
+		// 	if (availability !== 'available') {
+		// 		return combinedData[0].filter(function(d){ return Number(d.status.charging) > 0 && Number(d.status.available >= 0)})
+				
 		// 	}
 		// }
 		)
@@ -167,7 +175,8 @@ function filteredDataset(dataDay, dataEve) {
 		.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
 		.attr('r', '.2px')
 		.attr('class', 'circle')
-		.attr('fill', 'blue')
+		.attr('fill', 'rgba(10,10,230,0.623)')
+		.attr('stroke', 'rgb(10,10,235)')
 		// Assign classes to datapoints due charging availability
 		// .attr('class', function filter(d) { 
 		// 	if ((Number(d.status.available) > 0) && (Number(d.status.charging) >= 0) ) {
@@ -244,7 +253,7 @@ function filteredDataset(dataDay, dataEve) {
 	function updatingMapBusy(data) {
 	const chargingValues = data.filter(function(d){ return Number(d.status.charging) > 0 && Number(d.status.available >= 0)})
 	console.log("Bezet:", chargingValues)
-	reassignDots(chargingValues, "rgba(201, 14, 14, 0.753)", "rgb(179, 0, 0)")
+	reassignDots(chargingValues, "rgba(201, 14, 14, 0.541)", "rgb(179, 0, 0)")
 	}
 
 	// Filter option Time Of Day - On click choose dataset to determine which time of day it is

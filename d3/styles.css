@@ -47,13 +47,20 @@ body .dashboard .legenda > div {
 }
 
 .legenda-circle-1 {
+	background-color: rgba(10, 10, 230, 0.623);
+	border: 2px solid rgb(10,10,235);
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.legenda-circle-2 {
 	background-color: rgba(34, 219, 13, 0.685);
 	border: 2px solid rgb(34, 219, 13);
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
-.legenda-circle-2 {
-	background-color: rgba(201, 14, 14, 0.753);
+.legenda-circle-3 {
+	background-color: rgba(201, 14, 14, 0.541);
 	border: 2px solid rgb(179, 0, 0);
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
