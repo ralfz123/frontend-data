@@ -1,11 +1,6 @@
-// This file contains all code that is used for the dataviz, except the code for the map projection ('../projection')
-
 // ------------------------------- DATA FETCH below ----------------------------------------------
 const endpointOne = 'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataDay.json'; // Data from a Day - 08:00h
 const endpointTwo = 'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataEve.json'; // Data from a Eve - 20:00h
-
-// const statusAvailable = 'available'; // Available Charging points
-// const statusCharging = 'charging'; // Busy Charging points
 
 // Fetching data
 // Receiving data using fetch()
@@ -143,21 +138,29 @@ function filteredDataset(dataDay, dataEve) {
 			g.attr('stroke-width', 1 / transform.k);
 		}
 	
-		dots(combinedData);
+		dots(combinedData[0]);
+		console.log("Default (first) input data = DAG:", combinedData[0])
 		// console.log("combinedData:", combinedData)
-		// dots(dataCharging)
-		
 	});
 
 	// ------------------------------- D3 DATA PLOTS below ----------------------------------------------
 
 	// Formatter for map plots
-	function dots (realData) {
+	function dots (dotData) {
 		const g = d3.select('g')
 		const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
 	
 		g.selectAll('circle')
-		.data(realData[0])
+		.data(dotData
+		// 	, function(dayTime) {
+		// 	if (dayTime == 'day'){
+		// 		console.log("Day clicked", combinedData[0])
+		// 		return combinedData[0];
+		// 	} else {
+		// 		return combinedData[1];
+		// 	}
+		// }
+		)
 		.enter()
 		.append('circle')
 		.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
@@ -174,6 +177,7 @@ function filteredDataset(dataDay, dataEve) {
 		// 		return 'chargingValue'
 		// 	} 
 		// })
+		
 
 	// Update pattern for the data plots after a clicked filterbutton
 	function reassignDots(data, color, strokeColor) {
@@ -205,29 +209,29 @@ function filteredDataset(dataDay, dataEve) {
 	.select('input#available')
 	.on("click", function clicking() {
 		console.log('"Available" clicked')
-		updatingMapAvailable(realData[0])
+		updatingMapAvailable(dotData)
 	});
 	
 	// Filteroption "Bezet"
 	d3.select('input#busy')
 	.on("click", function clicking() {
 		console.log('"Busy" clicked')
-		updatingMapBusy(realData[0])
+		updatingMapBusy(dotData)
 	});
 
-	// // Filteroption "Overdag"
-	// d3.select('input#day')
-	// .on("click", function clicking() {
-	// 	console.log('"Day" clicked')
-	// 	handleClickTimeOfDay("day") // Day data
-	// });
+	// Filteroption "Overdag"
+	d3.select('input#day')
+	.on("click", function clicking() {
+		console.log('"Day" clicked')
+		handleClickTimeOfDay("day") // Day data
+	});
 
-	// // Filteroption "'s Avonds"
-	// d3.select('input#eve')
-	// .on("click", function clicking() {
-	// 	console.log('"Eve" clicked')
-	// 	handleClickTimeOfDay("eve") // Eve data switch
-	// 	});
+	// Filteroption "'s Avonds"
+	d3.select('input#eve')
+	.on("click", function clicking() {
+		console.log('"Eve" clicked')
+		handleClickTimeOfDay("eve") // Eve data switch
+		});
 
 	// Filter data to show available chargingpoints
 	function updatingMapAvailable(data) {
@@ -235,8 +239,8 @@ function filteredDataset(dataDay, dataEve) {
 	console.log("Beschikbaar:", availableValues)
 	reassignDots(availableValues, "rgba(34, 219, 13, 0.349)", "rgb(34, 219, 13)")
 	}
-	
-	// Filter data to show busy chargingpoints
+
+	// Filter option - Show available and busy chargingpoints
 	function updatingMapBusy(data) {
 	const chargingValues = data.filter(function(d){ return Number(d.status.charging) > 0 && Number(d.status.available >= 0)})
 	console.log("Bezet:", chargingValues)
@@ -244,20 +248,15 @@ function filteredDataset(dataDay, dataEve) {
 	}
 
 	// Filter option Time Of Day - On click choose dataset to determine which time of day it is
-	// function handleClickTimeOfDay(timeOfDay) {
-	// 	// const endpoint = timeOfDay === 'day' ? endpointOne : endpointTwo;
-	// 	// const plots = timeOfDay === 'day' ? realData[0] : realData[1];
-
-	// 	if (timeOfDay == 'day') {
-	// 		console.log("This is DAY", realData[0])
-	// 		dots(realData[0]);
-	// 	} else {
-	// 		console.log("This is EVE", realData[1])
-	// 		dots(realData[1]);
-	// 	}
-		
-	// 	// When multiple clicks on button, then: d3.v6.min.js:2 Uncaught TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
-	// }
+	function handleClickTimeOfDay(timeOfDay) {
+		if (timeOfDay == 'day') {
+			console.log("This is DAY", combinedData[0])
+			dots(combinedData[0]);
+		} else {
+			console.log("This is EVE", combinedData[1])
+			dots(combinedData[1]);
+		}
+	}
 
 
 }}
