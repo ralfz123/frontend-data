@@ -38,17 +38,17 @@ function filteredDataset(dataDay, dataEve) {
 	// Thanks for help Rowin Ruizendaal (https://github.com/RowinRuizendaal/frontend-data)
 
 	// Fetch map of The Netherlands via external source
-	function nlData() {
+	function mapHolland() {
 		return fetch(
 			'https://cartomap.github.io/nl/wgs84/gemeente_2020.topojson'
 		)
 			.then((res) => res.json())
-			.then((data) => {
-				return data;
+			.then((hollandData) => {
+				return hollandData;
 			});
 	}
 
-	nlData().then((data) => {
+	mapHolland().then((hollandData) => {
 		const path = d3.geoPath();
 		const zoom = d3.zoom().scaleExtent([1, 30]).on('zoom', zoomed); // Zoom function
 
@@ -75,7 +75,7 @@ function filteredDataset(dataDay, dataEve) {
 			.attr('fill', '#444')
 			.attr('cursor', 'pointer')
 			.selectAll('path')
-			.data(topojson.feature(data, data.objects.gemeente_2020).features)
+			.data(topojson.feature(hollandData, hollandData.objects.gemeente_2020).features)
 			.join('path')
 			.on('click', clicked)
 			.attr('d', path);
@@ -138,7 +138,7 @@ function filteredDataset(dataDay, dataEve) {
 			g.attr('stroke-width', 1 / transform.k);
 		}
 	
-		dots(combinedData[0]);
+		plottingDots(combinedData[0]);
 		console.log("Default (first) input data = DAG:", combinedData[0])
 		// console.log("combinedData:", combinedData)
 	});
@@ -146,7 +146,7 @@ function filteredDataset(dataDay, dataEve) {
 	// ------------------------------- D3 DATA PLOTS below ----------------------------------------------
 
 	// Formatter for map plots
-	function dots (dotData) {
+	function plottingDots (dotData) {
 		const g = d3.select('g')
 		const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
 	
@@ -181,16 +181,16 @@ function filteredDataset(dataDay, dataEve) {
 
 	// Update pattern for the data plots after a clicked filterbutton
 	function reassignDots(data, color, strokeColor) {
-		const dots = g.selectAll('circle') 
-						.data(data) // Assign new data to the dots
+		const plottingDots = g.selectAll('circle') 
+						.data(data) // Assign new data to the plottingDots
 
-		dots
+		plottingDots
 			.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
 			.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
 			.attr('fill', color)
 			.attr('stroke', strokeColor)
 
-		dots.enter()
+		plottingDots.enter()
 			.append('circle')
 			.attr('r', '.2px')
 			.attr('fill', color)
@@ -198,7 +198,7 @@ function filteredDataset(dataDay, dataEve) {
 			.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
 			.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
 					
-		dots.exit()
+		plottingDots.exit()
 			.remove()
 		}
 	
@@ -251,10 +251,10 @@ function filteredDataset(dataDay, dataEve) {
 	function handleClickTimeOfDay(timeOfDay) {
 		if (timeOfDay == 'day') {
 			console.log("This is DAY", combinedData[0])
-			dots(combinedData[0]);
+			plottingDots(combinedData[0]);
 		} else {
 			console.log("This is EVE", combinedData[1])
-			dots(combinedData[1]);
+			plottingDots(combinedData[1]);
 		}
 	}
 
