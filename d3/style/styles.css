@@ -4,6 +4,7 @@ body {
 	box-sizing: border-box;
 	overflow: hidden;
 	background: #2b342a;
+	font-family: 'Poppins', sans-serif;
 }
 
 body .dashboard {
@@ -16,9 +17,17 @@ body .dashboard {
 	margin: 1em;
 	margin-left: 0.5em;
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.39);
-	font-family: 'Roboto', sans-serif;
 	font-weight: 300;
 }
+
+body .dashboard h1 {
+	font-size: 1.5rem;
+}
+
+body .dashboard h1 #colored-title {
+	color:#2b342a;
+}
+
 
 body .dashboard .active-framework {
 	border: 1px dotted rgb(192, 192, 192);
@@ -29,12 +38,10 @@ body .dashboard .active-framework {
 }
 
 body .dashboard .legenda {
-	/* border: 0.1px solid grey; */
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
-	/* margin-top: 250px; */
 	max-width: 15vw;
 	width: 16vw;
 }
@@ -65,9 +72,7 @@ body .dashboard .legenda > div {
 }
 
 body .dashboard .legenda p {
-	/* width: 12em; */
 	width: 12vw;
-	/* margin: auto; */
 	margin: 5px;
 }
 
@@ -93,6 +98,10 @@ body .dashboard .legenda p {
 	color: rgb(53, 80, 50);
 }
 
+.filter-buttons input:checked + label {
+	color: #0b3507
+	}
+
 path {
 	fill: rgb(126, 126, 126);
 	stroke: #ffffff;
@@ -100,10 +109,7 @@ path {
 }
 
 .meta {
-	font-family: 'Roboto', sans-serif;
-	font-weight: 300;
 	font-size: 0.9rem;
 	color: #00000040;
-	/* margin: 0em 1em; */
 	margin-top: 2em;
 }

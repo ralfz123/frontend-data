@@ -7,8 +7,10 @@
 		<title>Auto in de stad</title>
 		<link rel="stylesheet" href="style/styles.css" />
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,100&display=swap" rel="stylesheet"/>
-		<link rel="icon" type="image/svg" href="/favicon.svg"/>
-
+		<link rel="shortcut icon" type="image/svg" href="favicon.svg"/>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap" rel="stylesheet">
+		
+		<!-- D3 packages -->
 		<script src="https://d3js.org/d3.v6.min.js"></script>
   		<script src="https://unpkg.com/topojson@3.0.2			/dist/topojson.min.js"></script>
     	<script src="https://d3js.org/d3-zoom.v2.min.js"></script>
@@ -17,8 +19,8 @@
 	</head>
 	<body>
 		<div class="dashboard">
-			<h1>Wat is het verschil qua drukte van elektrisch laden tussen dag en avond in omgeving Hilversum?</h1>
-			<h3>Je kan door te filteren een overzicht zien van alle laadpalen per parkeergebied overdag of 's avonds.</h3>
+			<h1>Wat is het verschil qua drukte van <span id="colored-title">elektrisch laden</span> tussen <span id="colored-title">dag</span> en <span id="colored-title">avond</span> in omgeving Hilversum?</h1>
+			<h4>Je kan door te filteren een overzicht zien van alle laadpalen per parkeergebied overdag of 's avonds.</h4>
 			
 			<div class="filter-buttons">
 				<h2>Filteren</h2>
@@ -44,7 +46,7 @@
 			</div>
 
 			<!-- Legenda -->
-			<h3>Legenda</h3>
+			<h4>Legenda</h3>
 			<div class="legenda">
 				<div class="legenda-circle-1"> </div>
 				<p>Alle laadpalen</p>
