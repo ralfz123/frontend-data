@@ -13,7 +13,6 @@ let combinedData = [];
 // Current dataset
 let selectedData = combinedData;
 
-
 // Global variable - TIME OF THE DAY
 let timeOfDay = 'day';
 
@@ -36,14 +35,11 @@ function handleClickTimeOfDay(timeOfDay) {
 // Global variable - AVAILABILITY
 let availabilityState = 'available';
 
-// Function that selects the right data-array-key
-// 🚨 This function works, but does not plot the data on the map because "Uncaught ReferenceError: g is not defined"?
+// Function that checks state of the key (availability) - 🚨 This function works, but does not plot the data on the map because "Uncaught ReferenceError: g is not defined"?
 function availabilityChecker(clickedValue) {
 	console.log('Clicked value =', clickedValue)
-
-	// The data must be the 'current data'
+	
 	if (clickedValue == 'available'){
-		console.log(selectedData)
 		updatingMapAvailable(selectedData)
 	} else {
 		updatingMapBusy(selectedData)
@@ -281,7 +277,7 @@ d3.select('input#busy')
 
 // ------------------------------- UPDATING AVAILABILITY  ----------------------------------------------
 
-// Filter data to show available chargingpoints
+// Filter data to show available charging points
 function updatingMapAvailable(data) {
 	// console.log(data)
 	const availableValues = data.filter(function(d){ return (Number(d.status.available) > 0) && (Number(d.status.charging) >= 0)})
@@ -291,9 +287,9 @@ function updatingMapAvailable(data) {
 
 // ------------------------------- UPDATING BUSY  ----------------------------------------------
 
-// Filter option - Show available and busy chargingpoints
+// Filter data to show busy charging points
 function updatingMapBusy(data) {
-	const chargingValues = data.filter(function(d){ return Number(d.status.charging) > 0 && Number(d.status.available >= 0)})
-	console.log("Busy (filtered):", chargingValues)
-	reassignDots(chargingValues, "rgba(201, 14, 14, 0.541)", "rgb(179, 0, 0)")
+	const busyValues = data.filter(function(d){ return Number(d.status.charging) > 0 && Number(d.status.available >= 0)})
+	console.log("Busy (filtered):", busyValues)
+	reassignDots(busyValues, "rgba(201, 14, 14, 0.541)", "rgb(179, 0, 0)")
 };
