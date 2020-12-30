@@ -16,6 +16,7 @@ let selectedData = combinedData;
 // Global variable - TIME OF THE DAY
 let timeOfDay = 'day';
 
+
 // Filter option Time Of Day - On click choose dataset to determine which time of day it is
 function handleClickTimeOfDay(timeOfDay) {
 	if (timeOfDay == 'day') {
@@ -35,13 +36,15 @@ function handleClickTimeOfDay(timeOfDay) {
 // Global variable - AVAILABILITY
 let availabilityState = 'available';
 
-// Function that checks state of the key (availability) - 🚨 This function works, but does not plot the data on the map because "Uncaught ReferenceError: g is not defined"?
+// Function that checks state of the key (availability)
 function availabilityChecker(clickedValue) {
 	console.log('Clicked value =', clickedValue)
 	
 	if (clickedValue == 'available'){
+		plottingDots(combinedData[0]) // Reset to default
 		updatingMapAvailable(selectedData)
 	} else {
+		plottingDots(combinedData[0]) // Reset to default
 		updatingMapBusy(selectedData)
 	}
 };
@@ -219,7 +222,8 @@ function plottingDots (dotData) {
 
 // Update pattern for the data plots after a clicked filter button
 function reassignDots(data, color, strokeColor) {
-	const plottingDots = g.selectAll('circle') 
+	const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
+	const plottingDots = d3.selectAll('circle')
 							.data(data) // Assign new data to the plottingDots
 
 	plottingDots
@@ -237,7 +241,7 @@ function reassignDots(data, color, strokeColor) {
 		.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
 				
 	plottingDots.exit()
-		.remove()	
+		.remove()
 };
 	
 // ------------------------------- FILTER BUTTONS  ----------------------------------------------
@@ -263,7 +267,6 @@ d3.select('input#eve')
 // Filter button - "Beschikbaar"
 d3.select('input#available')
 .on("click", function clicking() {
-	// console.log('"Available" clicked')
 	console.log("selectedData (current data):", selectedData)
 	availabilityChecker("available")
 	});
@@ -271,16 +274,15 @@ d3.select('input#available')
 // Filter button - "Bezet"
 d3.select('input#busy')
 .on("click", function clicking() {
-	// console.log('"Busy" clicked')
 	console.log("selectedData (current data):", selectedData)
 	availabilityChecker("busy")
+
 });
 
 // ------------------------------- UPDATING AVAILABILITY  ----------------------------------------------
 
 // Filter data to show available charging points
 function updatingMapAvailable(data) {
-	// console.log(data)
 	const availableValues = data.filter(function(d){ return (Number(d.status.available) > 0) && (Number(d.status.charging) >= 0)})
 	console.log("Available (filtered):", availableValues)
 	reassignDots(availableValues, "rgba(34, 219, 13, 0.349)", "rgb(34, 219, 13)")
