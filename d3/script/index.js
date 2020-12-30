@@ -60,6 +60,7 @@ Promise.all([dataDay, dataEve]).then((response) => {
 	let [dataset1, dataset2] = response;
 	filteredDataset(dataset1, dataset2); // Cleans the data
 	plottingDots(combinedData[0]); // Assign the DAY data to the 'producing-dots' function
+	selectedData = combinedData[0] // Set default value to global variable
 	console.log("Default data (DAY):", combinedData[0])
 });
 
