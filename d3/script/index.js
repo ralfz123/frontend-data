@@ -12,15 +12,29 @@ let combinedData = [];
 
 // Current dataset
 let selectedData = combinedData;
-// console.log('selectedData =', selectedData)
 
-// Default state - Function that selects the right data-array
-// function dayTimeSelector() {
-// 	let stateTime = 'day'
-// };
 
-// Global variable
-let availabilityState = 'available'
+// Global variable - TIME OF THE DAY
+let timeOfDay = 'day';
+
+// Filter option Time Of Day - On click choose dataset to determine which time of day it is
+function handleClickTimeOfDay(timeOfDay) {
+	if (timeOfDay == 'day') {
+		timeOfDay = 'day'
+		console.log("DAY", combinedData[0])
+		plottingDots(combinedData[0]);
+		selectedData = combinedData[0]
+	} else {
+		timeOfDay = 'eve'
+		console.log("EVE", combinedData[1])
+		plottingDots(combinedData[1]);
+		selectedData = combinedData[1]
+	}
+};
+
+
+// Global variable - AVAILABILITY
+let availabilityState = 'available';
 
 // Function that selects the right data-array-key
 // 🚨 This function works, but does not plot the data on the map because "Uncaught ReferenceError: g is not defined"?
@@ -29,9 +43,10 @@ function availabilityChecker(clickedValue) {
 
 	// The data must be the 'current data'
 	if (clickedValue == 'available'){
-		updatingMapAvailable(combinedData[0])
+		console.log(selectedData)
+		updatingMapAvailable(selectedData)
 	} else {
-		updatingMapBusy(combinedData[0])
+		updatingMapBusy(selectedData)
 	}
 };
 
@@ -234,22 +249,6 @@ function reassignDots(data, color, strokeColor) {
 // Filter buttons in markup
 d3.select('.filter-buttons')
 
-// Filter button - "Beschikbaar"
-.select('input#available')
-.on("click", function clicking() {
-	// console.log('"Available" clicked')
-	availabilityChecker("available")
-	updatingMapAvailable(dotData)
-});
-
-// Filter button - "Bezet"
-d3.select('input#busy')
-.on("click", function clicking() {
-	// console.log('"Busy" clicked')
-	availabilityChecker("busy")
-	updatingMapBusy(dotData)
-});
-
 // Filter button - "Overdag"
 d3.select('input#day')
 .on("click", function clicking() {
@@ -264,10 +263,27 @@ d3.select('input#eve')
 	handleClickTimeOfDay("eve") // Eve data switch
 });
 
+// Filter button - "Beschikbaar"
+d3.select('input#available')
+.on("click", function clicking() {
+	// console.log('"Available" clicked')
+	console.log("selectedData (current data):", selectedData)
+	availabilityChecker("available")
+	});
+
+// Filter button - "Bezet"
+d3.select('input#busy')
+.on("click", function clicking() {
+	// console.log('"Busy" clicked')
+	console.log("selectedData (current data):", selectedData)
+	availabilityChecker("busy")
+});
+
 // ------------------------------- UPDATING AVAILABILITY  ----------------------------------------------
 
 // Filter data to show available chargingpoints
 function updatingMapAvailable(data) {
+	// console.log(data)
 	const availableValues = data.filter(function(d){ return (Number(d.status.available) > 0) && (Number(d.status.charging) >= 0)})
 	console.log("Available (filtered):", availableValues)
 	reassignDots(availableValues, "rgba(34, 219, 13, 0.349)", "rgb(34, 219, 13)")
@@ -280,17 +296,4 @@ function updatingMapBusy(data) {
 	const chargingValues = data.filter(function(d){ return Number(d.status.charging) > 0 && Number(d.status.available >= 0)})
 	console.log("Busy (filtered):", chargingValues)
 	reassignDots(chargingValues, "rgba(201, 14, 14, 0.541)", "rgb(179, 0, 0)")
-};
-
-// ------------------------------- UPDATING TIME OF THE DAY STATE  ----------------------------------------------
-
-// Filter option Time Of Day - On click choose dataset to determine which time of day it is
-function handleClickTimeOfDay(timeOfDay) {
-	if (timeOfDay == 'day') {
-		console.log("DAY", combinedData[0])
-		plottingDots(combinedData[0]);
-	} else {
-		console.log("EVE", combinedData[1])
-		plottingDots(combinedData[1]);
-	}
 };
