@@ -6,7 +6,7 @@ const endpointTwo = 'https://raw.githubusercontent.com/ralfz123/frontend-data/ma
 const dataDay = fetch(endpointOne).then((response) => response.json()); // Parses JSON data
 const dataEve = fetch(endpointTwo).then((response) => response.json()); // Parses JSON data
 
-// ------------------------------- STATE below ----------------------------------------------
+// ------------------------------- STATES below ----------------------------------------------
 // Global variable
 let combinedData = []; 
 
@@ -16,38 +16,8 @@ let selectedData = combinedData;
 // Global variable - TIME OF THE DAY
 let timeOfDay = 'day';
 
-
-// Filter option Time Of Day - On click choose dataset to determine which time of day it is
-function handleClickTimeOfDay(timeOfDay) {
-	if (timeOfDay == 'day') {
-		timeOfDay = 'day'
-		console.log("DAY", combinedData[0])
-		plottingDots(combinedData[0]);
-		selectedData = combinedData[0]
-	} else {
-		timeOfDay = 'eve'
-		console.log("EVE", combinedData[1])
-		plottingDots(combinedData[1]);
-		selectedData = combinedData[1]
-	}
-};
-
-
 // Global variable - AVAILABILITY
 let availabilityState = 'available';
-
-// Function that checks state of the key (availability)
-function availabilityChecker(clickedValue) {
-	console.log('Clicked value =', clickedValue)
-	
-	if (clickedValue == 'available'){
-		plottingDots(combinedData[0]) // Reset to default
-		updatingMapAvailable(selectedData)
-	} else {
-		plottingDots(combinedData[0]) // Reset to default
-		updatingMapBusy(selectedData)
-	}
-};
 
 // ------------------------------- FUNCTIONS INVOKING (HOISTING) below ----------------------------------------------
 
@@ -85,7 +55,8 @@ function filteredDataset(dataDay, dataEve) {
 		return object;
 	});
 
-	combinedData.push(cleanDataDay, cleanDataEve) // Push two cleaned arrays into one empty array (https://dzone.com/articles/ways-to-combine-arrays-in-javascript)
+	// Push two cleaned arrays into one empty array (https://dzone.com/articles/ways-to-combine-arrays-in-javascript)
+	combinedData.push(cleanDataDay, cleanDataEve)
 };
 
 // ------------------------------- D3 MAP  ----------------------------------------------
@@ -192,13 +163,9 @@ mapHolland().then((hollandData) => {
 		g.attr('transform', transform);
 		g.attr('stroke-width', 1 / transform.k);
 	}
-
-	// plottingDots(combinedData[0]);
-	// console.log("Default (first) input data = DAG:", combinedData[0])
-	// console.log("combinedData:", combinedData)
 });
 
-// ------------------------------- D3 DATA PLOTS  ----------------------------------------------
+// ------------------------------- D3 * DATA PLOTS  ----------------------------------------------
 
 // Formatter for map plots
 function plottingDots (dotData) {
@@ -217,7 +184,7 @@ function plottingDots (dotData) {
 	.attr('stroke', 'rgb(10,10,235)')
 };			
 
-// ------------------------------- D3 REASSIGNING PLOTS  ----------------------------------------------
+// ------------------------------- D3 * REASSIGNING PLOTS  ----------------------------------------------
 
 
 // Update pattern for the data plots after a clicked filter button
@@ -245,7 +212,6 @@ function reassignDots(data, color, strokeColor) {
 };
 	
 // ------------------------------- FILTER BUTTONS  ----------------------------------------------
-
 
 // Filter buttons in markup
 d3.select('.filter-buttons')
@@ -295,4 +261,36 @@ function updatingMapBusy(data) {
 	const busyValues = data.filter(function(d){ return Number(d.status.charging) > 0 && Number(d.status.available >= 0)})
 	console.log("Busy (filtered):", busyValues)
 	reassignDots(busyValues, "rgba(201, 14, 14, 0.541)", "rgb(179, 0, 0)")
+};
+
+// ------------------------------- TIME OF DAY CHECKER  ----------------------------------------------
+
+// Filter option Time Of Day - On click choose dataset to determine which time of day it is
+function handleClickTimeOfDay(timeOfDay) {
+	if (timeOfDay == 'day') {
+		timeOfDay = 'day'
+		console.log("DAY", combinedData[0])
+		plottingDots(combinedData[0]);
+		selectedData = combinedData[0]
+	} else {
+		timeOfDay = 'eve'
+		console.log("EVE", combinedData[1])
+		plottingDots(combinedData[1]);
+		selectedData = combinedData[1]
+	}
+};
+
+// ------------------------------- AVAILABILITY CHECKER  ----------------------------------------------
+
+// Function that checks state of the key (availability)
+function availabilityChecker(clickedValue) {
+	console.log('Clicked value =', clickedValue)
+	
+	if (clickedValue == 'available'){
+		plottingDots(combinedData[0]) // Reset to default
+		updatingMapAvailable(selectedData)
+	} else {
+		plottingDots(combinedData[0]) // Reset to default
+		updatingMapBusy(selectedData)
+	}
 };
