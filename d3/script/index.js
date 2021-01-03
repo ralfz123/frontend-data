@@ -68,13 +68,14 @@ function mapHolland() {
 		'https://cartomap.github.io/nl/wgs84/gemeente_2020.topojson'
 	)
 		.then((res) => res.json())
-		.then((hollandData) => {
-			return hollandData;
+		.then((hollandMapData) => {
+			console.log('MAP created!')
+			return hollandMapData;
 		});
 };
 
-// Drawing the map using D3 and the hollandData
-mapHolland().then((hollandData) => {
+// Drawing the map using D3 and the hollandMapData
+mapHolland().then((hollandMapData) => {
 	const path = d3.geoPath();
 	const zoom = d3.zoom().scaleExtent([1, 30]).on('zoom', zoomed); // Zoom function
 
@@ -90,7 +91,7 @@ mapHolland().then((hollandData) => {
 
 	const projection = d3
 		.geoMercator()
-		.scale(6000)
+		.scale(50000)
 		.center([5.116667, 52.17]);
 		
 	const pathGenerator = path.projection(projection);
@@ -101,7 +102,7 @@ mapHolland().then((hollandData) => {
 		.attr('fill', '#444')
 		.attr('cursor', 'pointer')
 		.selectAll('path')
-		.data(topojson.feature(hollandData, hollandData.objects.gemeente_2020).features)
+		.data(topojson.feature(hollandMapData, hollandMapData.objects.gemeente_2020).features)
 		.join('path')
 		.on('click', clicked)
 		.attr('d', path);
@@ -170,7 +171,7 @@ mapHolland().then((hollandData) => {
 // Formatter for map plots
 function plottingDots (dotData) {
 	const g = d3.select('g')
-	const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
+	const projection = d3.geoMercator().scale(50000).center([5.116667, 52.17]);
 
 	g.selectAll('circle')
 	.data(dotData)
@@ -178,10 +179,12 @@ function plottingDots (dotData) {
 	.append('circle')
 	.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
 	.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
-	.attr('r', '.2px')
+	.attr('r', '1px')
 	.attr('class', 'circle')
 	.attr('fill', 'rgba(10,10,230,0.623)')
 	.attr('stroke', 'rgb(10,10,235)')
+
+	console.log('Mapdots are plotted!')
 };			
 
 // ------------------------------- D3 * REASSIGNING PLOTS  ----------------------------------------------
@@ -189,7 +192,7 @@ function plottingDots (dotData) {
 
 // Update pattern for the data plots after a clicked filter button
 function reassignDots(data, color, strokeColor) {
-	const projection = d3.geoMercator().scale(6000).center([5.116667, 52.17]);
+	const projection = d3.geoMercator().scale(50000).center([5.116667, 52.17]);
 	const plottingDots = d3.selectAll('circle')
 							.data(data) // Assign new data to the plottingDots
 
@@ -201,7 +204,7 @@ function reassignDots(data, color, strokeColor) {
 
 	plottingDots.enter()
 		.append('circle')
-		.attr('r', '.2px')
+		.attr('r', '1px')
 		.attr('fill', color)
 		.attr('stroke', strokeColor)
 		.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
