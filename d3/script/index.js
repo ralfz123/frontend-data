@@ -11,13 +11,13 @@ const dataEve = fetch(endpointTwo).then((response) => response.json()); // Parse
 let combinedData = []; 
 
 // Current dataset
-let selectedData = combinedData;
+// let selectedData = combinedData;
 
 // Global variable - TIME OF THE DAY
 let timeOfDay = 'day';
 
 // Global variable - AVAILABILITY
-let availabilityState = 'available';
+// let availabilityState = 'available';
 
 // ------------------------------- FUNCTIONS INVOKING (HOISTING) below ----------------------------------------------
 
@@ -33,26 +33,24 @@ Promise.all([dataDay, dataEve]).then((response) => {
 	let [dataset1, dataset2] = response;
 	filteredDataset(dataset1, dataset2); // Cleans the data
 	plottingDots(combinedData[0]); // Assign the DAY data to the 'producing-dots' function
-	selectedData = combinedData[0] // Set default value to global variable
+	// selectedData = combinedData[0] // Set default value to global variable
 	console.log("Default data (DAY):", combinedData[0])
 });
 
 // Clean data - makes new array with needed data variables
 function filteredDataset(dataDay, dataEve) {
 	const cleanDataDay = dataDay.map((element) => {
-		const object = {};
-		object.point = element.point;
-		object.status = element.status;
-
-		return object;
+		return {
+			point: element.point,
+			status: element.status,
+		}
 	});
 
 	const cleanDataEve = dataEve.map((element) => {
-		const object = {};
-		object.point = element.point;
-		object.status = element.status;
-
-		return object;
+		return {
+			point: element.point,
+			status: element.status,
+		}
 	});
 
 	// Push two cleaned arrays into one empty array (https://dzone.com/articles/ways-to-combine-arrays-in-javascript)
@@ -106,18 +104,6 @@ mapHolland().then((hollandMapData) => {
 		.join('path')
 		.on('click', clicked)
 		.attr('d', path);
-
-	// gemeentes
-	// 	.append('g')
-	// 	.attr(
-	// 		'transform',
-	// 		({ lng, lat }) =>
-	// 			`translate(${projection([lng, lat]).join(',')})`
-	// 	)
-	// 	.append('circle')
-	// 	.attr('r', 3);
-
-	// console.log("Gemeentes:", gemeentes);
 
 	svg.call(zoom);
 
