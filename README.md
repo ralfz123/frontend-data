@@ -47,7 +47,7 @@ The data variables I think I can use, are:
 👉 Click [here](https://github.com/ralfz123/functional-programming/wiki/Onderzoek-%F0%9F%94%8D) for more details about my project research.
 
 ### Dataset structure
-```
+```json
 {
  point: {
   lat: 52.21061864,
