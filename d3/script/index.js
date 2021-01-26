@@ -101,10 +101,6 @@ mapHolland().then((hollandMapData) => {
     const [[x0, y0], [x1, y1]] = path.bounds(d);
     event.stopPropagation();
     gemeentes.transition().style('fill', null);
-
-    // d3.select(this).transition().style('fill', '#5e6a5d')
-    // svg.transition()
-    // 	.duration(750);
   }
 
   // Not needing - Zoom function
@@ -243,8 +239,8 @@ function handleClickAvailability(clickedValueAvailability) {
   console.log('Clicked value Availability =', clickedValueAvailability); // I need this for development process
 
   if (clickedValueAvailability == 'available') {
-    updatingMapAvailable(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 229 & 234
+    updatingMapAvailable(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 225 & 230
   } else {
-    updatingMapBusy(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 229 & 234
+    updatingMapBusy(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 225 & 230
   }
 }
