@@ -47,7 +47,7 @@ The data variables I think I can use, are:
 👉 Click [here](https://github.com/ralfz123/functional-programming/wiki/Onderzoek-%F0%9F%94%8D) for more details about my project research.
 
 ### Dataset structure
-```json
+```js
 {
  point: {
   lat: 52.21061864,
@@ -88,7 +88,7 @@ http://localhost:8000/
 
 
 ## :file_folder: Resources
-Credits to [Danny de Vries](https://github.com/dandevri) && [Laurens Aarnoudse](https://github.com/Razpudding) && [Robert Spier](https://github.com/roberrrt-s) for giving interesting lectures about Functional Programming and Frontend Data and how to deal with it. I would also like to thank @vuurvos1 and @RowinRuizendaal for helping and thinking.
+Credits to [Danny de Vries](https://github.com/dandevri) && [Laurens Aarnoudse](https://github.com/Razpudding) && [Robert Spier](https://github.com/roberrrt-s) for giving interesting lectures about Functional Programming and Frontend Data and how to deal with it. I would also like to thank [@vuurvos1](https://github.com/Vuurvos1) and [@RowinRuizendaal](https://github.com/RowinRuizendaal) for helping and thinking.
 
 - Aarnoudse, L.  (2020, October 28). Rubric. Consulted from https://github.com/cmda-tt/course-20-21
 - Aarnoudse, L.  (2020, October 28). Slides. Consulted from https://cmda-tt.github.io/course-20-21/slides/

@@ -1,3 +1,5 @@
+// Practising with RDW Open Data
+
 const endpointOne = 'https://opendata.rdw.nl/resource/b3us-f26s.json'; // API endpoint - Charging Points (dataset 1)
 const selectedColumn = 'areaid';
 // NPR dataset has also Charging POints data - Discuss if I'm going to use that dataset. It contains all my needed variables.
@@ -8,9 +10,8 @@ const selectedColumn = 'areaid';
 fetchingData(endpointOne).then((dataRDW) => {
 	const getAreaIdArray = newStringDataArray(dataRDW, selectedColumn);
 	const getCapacityArray = newDataArray(dataRDW, 'capacity');
-	console.log('AreaId is:', getAreaIdArray);
-	console.log('Charging Capacity is:', getCapacityArray);
-	
+	// console.log('AreaId is:', getAreaIdArray);
+	// console.log('Charging Capacity is:', getCapacityArray);
 });
 
 // Receiving data using fetch()
@@ -29,8 +30,9 @@ function newDataArray(dataArray, key) {
 	return dataArray.map((item) => {
 		item[key] = Number(item[key]); // Makes all items from unique key a NUMBER type.
 
-		if (item[key] <= 0) { // When item is lower than or equal to 0, return null
-			console.log('Negative or zero value');
+		if (item[key] <= 0) {
+			// When item is lower than or equal to 0, return null
+			// console.log('Negative or zero value');
 			return null;
 		} else {
 			return item[key];
@@ -44,9 +46,9 @@ function newStringDataArray(dataArray, key) {
 		item[key] = item[key];
 		// console.log(item[key])
 
-		if (item[key] === ('')) {
+		if (item[key] === '') {
 			console.log('Empty string');
-			console.log(item)	
+			console.log(item);
 			return null;
 		} else {
 			return item[key];

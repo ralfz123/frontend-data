@@ -6,66 +6,104 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>Auto in de stad</title>
 		<link rel="stylesheet" href="style/styles.css" />
-		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,100&display=swap" rel="stylesheet"/>
-		<link rel="shortcut icon" type="image/svg" href="favicon.svg"/>
-		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap" rel="stylesheet">
-		
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,100&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="shortcut icon" type="image/svg" href="favicon.svg" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap"
+			rel="stylesheet"
+		/>
+
 		<!-- D3 packages -->
 		<script src="https://d3js.org/d3.v6.min.js"></script>
-  		<script src="https://unpkg.com/topojson@3.0.2			/dist/topojson.min.js"></script>
-    	<script src="https://d3js.org/d3-zoom.v2.min.js"></script>
+		<script src="https://unpkg.com/topojson@3.0.2			/dist/topojson.min.js"></script>
+		<script src="https://d3js.org/d3-zoom.v2.min.js"></script>
 		<script src="https://unpkg.com/topojson@3"></script>
-		
 	</head>
 	<body>
 		<div class="dashboard">
-			<h1>Wat is het verschil qua drukte van <span id="colored-title">elektrisch laden</span> tussen <span id="colored-title">dag</span> en <span id="colored-title">avond</span> in omgeving Hilversum?</h1>
-			<p>Je kan door te filteren een overzicht zien van alle laadpalen per parkeergebied overdag of 's avonds.</p>
-			
+			<h1>
+				Wat is het verschil qua drukte van
+				<span id="colored-title">elektrisch laden</span> tussen
+				<span id="colored-title">dag</span> en
+				<span id="colored-title">avond</span> in omgeving Hilversum?
+			</h1>
+			<p>
+				Je kan door te filteren een overzicht zien van alle laadpalen
+				per parkeergebied overdag of 's avonds.
+			</p>
+			<p>
+				Kies hieronder op welk moment van de dag u de laadpalen wilt
+				zien.
+			</p>
+
 			<div class="filter-buttons">
 				<h2>Filteren</h2>
 				<div>
 					<h5>Moment van de dag</h5>
 					<!-- Day or Eve -->
-					<input type="radio" id="day" value="day" name="daytime" checked="checked" />
+					<input type="radio" id="day" value="day" name="daytime" />
 					<label for="day">Overdag</label>
-	
+
 					<input type="radio" id="eve" value="eve" name="daytime" />
 					<label for="eve">'s Avonds</label>
 				</div>
-				
+
 				<div>
 					<h5>Status laadpalen</h5>
 					<!-- Available or Charging -->
-					<input type="radio" id="available" value="available" name="availability" />
+					<input
+						type="radio"
+						id="available"
+						value="available"
+						name="availability"
+					/>
 					<label for="available">Beschikbaar</label>
 
-					<input type="radio" id="busy" value="busy" name="availability" />
+					<input
+						type="radio"
+						id="busy"
+						value="busy"
+						name="availability"
+					/>
 					<label for="busy">Bezet</label>
 				</div>
 			</div>
 
 			<!-- Legenda -->
-			<h4>Legenda</h3>
-			<div class="legenda">
-				<div class="legenda-circle-1"> </div>
-				<p>Alle laadpalen</p>
+			<h4>Legenda</h4>
 
-				<div class="legenda-circle-2"> </div>
-				<p>Beschikbaar</p>
-				
-				<div class="legenda-circle-3"></div>
-				<p>Bezet</p>
-            </div>
-            
-			<p class="meta">Datavisualisatie gemaakt door Ralf Zonneveld © 2021 - All rights reserved</p>
-			<a class="meta" href="https://github.com/ralfz123/frontend-data" target="_blank">GitHub link</a>
+			<ul class="legenda">
+				<li>
+					<div class="legenda-circle-1"></div>
+					<p>Alle laadpalen</p>
+				</li>
+				<li>
+					<div class="legenda-circle-2"></div>
+					<p>Beschikbaar</p>
+				</li>
+				<li>
+					<div class="legenda-circle-3"></div>
+					<p>Bezet</p>
+				</li>
+			</ul>
 
+			<p class="meta">
+				Datavisualisatie gemaakt door Ralf Zonneveld © 2021 - All rights
+				reserved
+			</p>
+			<a
+				class="meta"
+				href="https://github.com/ralfz123/frontend-data"
+				target="_blank"
+				>GitHub link</a
+			>
 		</div>
 
 		<svg></svg>
 
 		<script src="script/index.js"></script>
-
 	</body>
 </html>
