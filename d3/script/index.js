@@ -1,7 +1,9 @@
 // ------------------------------- DATA FETCHING below ----------------------------------------------
 
-const endpointOne = 'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataDay.json'; // Data from a Day - 08:00h
-const endpointTwo = 'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataEve.json'; // Data from an Eve - 20:00h
+const endpointOne =
+	'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataDay.json'; // Data from a Day - 08:00h
+const endpointTwo =
+	'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataEve.json'; // Data from an Eve - 20:00h
 
 // Fetching data - Receiving data using fetch()
 const dataDay = fetch(endpointOne).then((response) => response.json()); // Parses JSON data
@@ -81,10 +83,8 @@ mapHolland().then((hollandMapData) => {
 		.attr('cursor', 'grab')
 		.selectAll('path')
 		.data(
-			topojson.feature(
-				hollandMapData,
-				hollandMapData.objects.gemeente_2020
-			).features
+			topojson.feature(hollandMapData, hollandMapData.objects.gemeente_2020)
+				.features
 		)
 		.join('path')
 		.on('click', clicked)
@@ -212,7 +212,7 @@ function updatingMapBusy(unfilteredData) {
 	plottingDots(unfilteredData); // Reset to default (all chargingpoints)
 	const busyValues = unfilteredData.filter(function (d) {
 		return Number(d.status.charging) > 0 && Number(d.status.available >= 0); // Filters the unfiltered data for the correct display (busy chargingpoints)
-	}); 
+	});
 	// console.log("Busy (filtered):", busyValues); // I need this for development process
 	reassignDots(busyValues, 'rgba(201, 14, 14, 0.541)', 'rgb(228, 3, 3)');
 }
