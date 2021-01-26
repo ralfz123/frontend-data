@@ -32,10 +32,12 @@ body .dashboard h1 #colored-title {
 body .dashboard > p:nth-child(2) {
 	margin: 0 auto;
 	margin: 10px 0px;
+	font-size: 0.9rem;
 }
 
 body .dashboard p:nth-child(3) {
 	font-style: italic;
+	font-size: 0.9rem;
 	margin: 0 auto;
 	margin: 10px 0px;
 }
@@ -43,13 +45,18 @@ body .dashboard p:nth-child(3) {
 .filter-buttons h2 {
 	margin: 0 auto;
 	margin-top: 5px;
+	font-size: 1.3rem;
 }
 
-.filter-buttons h5 {
+.filter-buttons h4 {
 	margin: auto;
 	margin-top: 1em;
 	margin-bottom: 1em;
 	font-size: 1rem;
+}
+
+.filter-buttons > h4 {
+	color: red;
 }
 
 .filter-buttons input {
@@ -78,24 +85,15 @@ body .dashboard p:nth-child(3) {
 	border-radius: 5px;
 }
 
-body .dashboard h4 {
-	margin: 20px 0px 10px 0px;
+body .dashboard h3 {
+	margin: 20px 0px 8px 0px;
 }
 
 body .dashboard .legenda {
-	/* position: relative; */
-	/* display: flex;
-	flex-wrap: wrap;
-	flex-direction: row; */
-	/* max-width: 15vw;
-	width: 14vw; */
-
 	padding-left: 0px;
 	list-style: none;
-}
-
-body .dashboard .legenda li {
-	display: inline;
+	margin-bottom: 0px;
+	margin-top: 5px;
 }
 
 body .dashboard .legenda li > div {
@@ -103,11 +101,12 @@ body .dashboard .legenda li > div {
 	height: 15px;
 	border-radius: 50%;
 	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+	display: inline-block;
 }
 
 body .dashboard .legenda li > p {
-	width: 12vw;
-	margin: 5px;
+	display: inline;
+	padding-left: 2px;
 	font-size: 0.8rem;
 }
 
@@ -133,7 +132,19 @@ path {
 }
 
 .meta {
+	margin: 0;
+	margin-top: 1em;
+	padding: 5px;
 	font-size: 0.7rem;
-	color: #00000040;
-	margin-top: 2em;
+	color: #ffffff69;
+	background: #2d412a27;
+	border-radius: 4px;
+}
+.meta a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.meta a:hover {
+	color: #000000;
 }
