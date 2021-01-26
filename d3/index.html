@@ -23,6 +23,7 @@
 		<script src="https://unpkg.com/topojson@3"></script>
 	</head>
 	<body>
+		<!-- Dashboard overlay -->
 		<div class="dashboard">
 			<h1>
 				Wat is het verschil qua drukte van
@@ -39,6 +40,7 @@
 				zien.
 			</p>
 
+			<!-- Filter pattern -->
 			<div class="filter-buttons">
 				<h2>Filteren</h2>
 				<div>
@@ -53,7 +55,7 @@
 
 				<div>
 					<h4>Status laadpalen</h4>
-					<!-- Available or Charging -->
+					<!-- Available or Busy -->
 					<input
 						type="radio"
 						id="available"
@@ -72,7 +74,7 @@
 				</div>
 			</div>
 
-			<!-- Legenda -->
+			<!-- Legend -->
 			<h3>Legenda</h3>
 
 			<ul class="legenda">
@@ -89,9 +91,10 @@
 					<p>Bezet</p>
 				</li>
 			</ul>
-
+			
+			<!-- Meta content -->
 			<p class="meta">
-				Datavisualisatie gemaakt door Ralf Zonneveld © 2021 | All rights
+				Datavisualisatie gemaakt door Ralf Zonneveld © 2021 - All rights
 				reserved |
 				<a
 					href="https://github.com/ralfz123/frontend-data"
@@ -101,6 +104,7 @@
 			</p>
 		</div>
 
+		<!-- Map -->
 		<svg></svg>
 
 		<script src="script/index.js"></script>

@@ -1,4 +1,5 @@
 // ------------------------------- DATA FETCHING below ----------------------------------------------
+
 const endpointOne = 'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataDay.json'; // Data from a Day - 08:00h
 const endpointTwo = 'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataEve.json'; // Data from an Eve - 20:00h
 
@@ -6,44 +7,17 @@ const endpointTwo = 'https://raw.githubusercontent.com/ralfz123/frontend-data/ma
 const dataDay = fetch(endpointOne).then((response) => response.json()); // Parses JSON data
 const dataEve = fetch(endpointTwo).then((response) => response.json()); // Parses JSON data
 
-// ------------------------------- STATES below ----------------------------------------------
-// Global variable
-// let combinedData = []; 
+// ------------------------------- STATE below ----------------------------------------------
 
-// Global variable
+// Global variable - combined datasets
 let cleanCombinedData;
 
-// Current dataset
-// let selectedData = combinedData;
-
-// Global variable - TIME OF THE DAY
-let timeOfDay;
-
-// Global variable - AVAILABILITY
-// let availabilityState = 'available';
-
-// ------------------------------- FUNCTIONS INVOKING (HOISTING) below ----------------------------------------------
-
-// filteren van dataset();
-// D3 map();
-// D3 map dots plotten();
-
 // ------------------------------- FUNCTIONS below ----------------------------------------------
-
 
 // Getting both datasets through an Promise.all (is solved when all promises above get resolved)
 Promise.all([dataDay, dataEve]).then((response) => {
 	let [dataset1, dataset2] = response;
-	// filteredDataset(dataset1, dataset2); // Cleans the data
-	// plottingDots(combinedData[0]); // Assign the DAY data to the 'producing-dots' function
-	// // selectedData = combinedData[0] // Set default value to global variable
-	// console.log("Default data (DAY):", combinedData[0])
-	
 	cleanCombinedData = filteredDataset(dataset1, dataset2); 
-	console.log('cleanCombinedData =', cleanCombinedData)
-	// plottingDots(cleanCombinedData [0]); 
-	// selectedData = cleanCombinedData [0];
-	// console.log("Default data (DAY):", cleanCombinedData [0]);	
 });
 
 // Clean data - makes new array with needed data variables
@@ -53,7 +27,7 @@ function filteredDataset(dataDay, dataEve) {
 			timeOfday: 'day',
 			point: element.point,
 			status: element.status,
-		}
+		};
 	});
 
 	const cleanDataEve = dataEve.map((element) => {
@@ -61,28 +35,27 @@ function filteredDataset(dataDay, dataEve) {
 			timeOfday: 'eve',
 			point: element.point,
 			status: element.status,
-		}
+		};
 	});
 
 	// Push two cleaned arrays into one empty array (https://dzone.com/articles/ways-to-combine-arrays-in-javascript)
 	// combinedData.push(cleanDataDay, cleanDataEve)
 	return [cleanDataDay, cleanDataEve];
-};
+}
 
-// ------------------------------- D3 MAP  ----------------------------------------------
+// ------------------------------- D3 * MAP  ----------------------------------------------
 // Thanks for help @Vuurvos1 & @RowinRuizendaal
 
-// Fetch map of The Netherlands via external source
+// Fetch map of The Netherlands via external source (https://github.com/cartomap/nl)
 function mapHolland() {
 	return fetch(
 		'https://cartomap.github.io/nl/wgs84/gemeente_2020.topojson'
 	)
 		.then((res) => res.json())
 		.then((hollandMapData) => {
-			console.log('MAP created!')
 			return hollandMapData;
 		});
-};
+}
 
 // Drawing the map using D3 and the hollandMapData
 mapHolland().then((hollandMapData) => {
@@ -122,17 +95,17 @@ mapHolland().then((hollandMapData) => {
 	function reset() {
 		gemeentes.transition().style('fill', null);
 		svg.transition()
-			.duration(750)
+			.duration(750);
 	}
 
 	function clicked(event, d) {
 		const [[x0, y0], [x1, y1]] = path.bounds(d);
 		event.stopPropagation();
 		gemeentes.transition().style('fill', null);
-		// d3.select(this).transition().style('fill', 'rgb(107, 105, 105)');
-		d3.select(this).transition().style('fill', 'rgb(150, 150, 150)');
-		svg.transition()
-			.duration(750)
+		
+		// d3.select(this).transition().style('fill', '#5e6a5d')
+		// svg.transition()
+		// 	.duration(750);
 	}
 
 	// Not needing - Zoom function
@@ -143,7 +116,7 @@ mapHolland().then((hollandMapData) => {
 	}
 });
 
-// ------------------------------- D3 * DATA PLOTS  ----------------------------------------------
+// ------------------------------- D3 * MAP PLOTS  ----------------------------------------------
 
 // Formatter for map plots
 function plottingDots (dotData) {
@@ -158,26 +131,23 @@ function plottingDots (dotData) {
 	.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
 	.attr('r', '1px')
 	.attr('class', 'circle')
-	.attr('fill', 'rgba(10,10,230,0.623)')
-	.attr('stroke', 'rgb(4, 4, 218)')
+	.attr('fill', 'rgba(255, 255, 255, 0.85)')
+	.attr('stroke', 'rgb(255, 255, 255)');
+}		
 
-	console.log('Mapdots are plotted!')
-};			
-
-// ------------------------------- D3 * REASSIGNING DATA PLOTS  --------------------------------------
-
+// ------------------------------- D3 * REASSIGNING MAP PLOTS  --------------------------------------
 
 // Update pattern for the data plots after a clicked filter button
-function reassignDots(data, color, strokeColor) {
+function reassignDots(filteredData, color, strokeColor) {
 	const projection = d3.geoMercator().scale(50000).center([5.116667, 52.17]);
 	const plottingDots = d3.selectAll('circle')
-							.data(data) // Assign new data to the plottingDots
+							.data(filteredData) // Assign new data to the plottingDots
 
 	plottingDots
 		.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
 		.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
 		.attr('fill', color)
-		.attr('stroke', strokeColor)
+		.attr('stroke', strokeColor);
 
 	plottingDots.enter()
 		.append('circle')
@@ -185,94 +155,86 @@ function reassignDots(data, color, strokeColor) {
 		.attr('fill', color)
 		.attr('stroke', strokeColor)
 		.attr('cx', function (d) {return projection([d.point.lng, d.point.lat])[0];})
-		.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];})
+		.attr('cy', function (d) {return projection([d.point.lng, d.point.lat])[1];});
 				
 	plottingDots.exit()
-		.remove()
-};
+		.remove();
+}
 	
 // ------------------------------- FILTER BUTTONS  ----------------------------------------------
-
-// Filter buttons in markup
-d3.select('.filter-buttons')
 
 // Filter button - "Overdag"
 d3.select('input#day')
 .on("click", function clicking() {
-	console.log('"Day" clicked');
-	handleClickTimeOfDay("day"); // Day data switch
+	handleClickTimeOfDay("day");
 });
 
 // Filter button - "'s Avonds"
 d3.select('input#eve')
 .on("click", function clicking() {
-	console.log('"Eve" clicked');
-	handleClickTimeOfDay("eve"); // Eve data switch
+	handleClickTimeOfDay("eve");
 });
 
 // Filter button - "Beschikbaar"
 d3.select('input#available')
 .on("click", function clicking() {
-	console.log("selectedTimeOfDayData (current data):", selectedTimeOfDayData);
-	availabilityChecker("available");
-	});
+	handleClickAvailability("available");
+});
 
 // Filter button - "Bezet"
 d3.select('input#busy')
 .on("click", function clicking() {
-	console.log("selectedTimeOfDayData (current data):", selectedTimeOfDayData);
-	availabilityChecker("busy");
-
+	handleClickAvailability("busy");
 });
 
-// ------------------------------- UPDATING AVAILABILITY  ----------------------------------------------
+// ------------------------------- UPDATING * AVAILABILITY  ----------------------------------------------
 
 // Filter data to show available charging points
-function updatingMapAvailable(data) {
-	plottingDots(data); // Reset to default (all chargingpoints)
-	const availableValues = data.filter(function(d){ return (Number(d.status.available) > 0) && (Number(d.status.charging) >= 0)})
-	console.log("Available (filtered):", availableValues);
+function updatingMapAvailable(unfilteredData) {
+	plottingDots(unfilteredData); // Reset to default (all chargingpoints)
+	const availableValues = unfilteredData.filter(function(d){ return (Number(d.status.available) > 0) && (Number(d.status.charging) >= 0)}) // Filters the unfiltered data for the correct display (available chargingpoints)
+	// console.log("Available (filtered):", availableValues); // I need this for development process
 	reassignDots(availableValues, "rgba(34, 219, 13, 0.349)", "rgb(34, 219, 13)");
-};
+}
 
-// ------------------------------- UPDATING BUSY  ------------------------------------------------------
+// ------------------------------- UPDATING * BUSY  ------------------------------------------------------
 
 // Filter data to show busy charging points
-function updatingMapBusy(data) {
-	plottingDots(data); // Reset to default (all chargingpoints)
-	const busyValues = data.filter(function(d){ return Number(d.status.charging) > 0 && Number(d.status.available >= 0)})
-	console.log("Busy (filtered):", busyValues);
+function updatingMapBusy(unfilteredData) {
+	plottingDots(unfilteredData); // Reset to default (all chargingpoints)
+	const busyValues = unfilteredData.filter(function(d){ return Number(d.status.charging) > 0 && Number(d.status.available >= 0)}) // Filters the unfiltered data for the correct display (busy chargingpoints)
+	// console.log("Busy (filtered):", busyValues); // I need this for development process
 	reassignDots(busyValues, "rgba(201, 14, 14, 0.541)", "rgb(228, 3, 3)");
-};
+}
 
-// ------------------------------- TIME OF DAY CHECKER  ----------------------------------------------
+// ------------------------------- HANDLE CLICK * TIME OF DAY  ----------------------------------------------
 
 // Filter option Time Of Day - On click choose dataset to determine which time of day it is
-function handleClickTimeOfDay(timeOfDay) {
-	if (timeOfDay == 'day') {
-		timeOfDay = 'day';
-		console.log("DAY", cleanCombinedData[0]);
-		selectedTimeOfDayData = cleanCombinedData[0];
-		plottingDots(selectedTimeOfDayData);
+function handleClickTimeOfDay(clickedValueTimeOfDay) {
+	console.log('Clicked value TimeOfDay =', clickedValueTimeOfDay); // I need this for development process
+	
+	if (clickedValueTimeOfDay == 'day') {
+		clickedValueTimeOfDay = 'day';
+		// console.log("DAY", cleanCombinedData[0]); // I need this for development process
+		selectedTimeOfDayData = cleanCombinedData[0]; // This variable stands for keeping the current dataset (Day)
+		plottingDots(selectedTimeOfDayData); 
 	} else {
-		timeOfDay = 'eve';
-		console.log("EVE", cleanCombinedData[1]);
-		selectedTimeOfDayData = cleanCombinedData[1];
+		clickedValueTimeOfDay = 'eve';
+		// console.log("EVE", cleanCombinedData[1]); // I need this for development process
+		selectedTimeOfDayData = cleanCombinedData[1]; // This variable stands for keeping the current dataset (Eve)
 		plottingDots(selectedTimeOfDayData);
 	}
-};
+}
 
-// ------------------------------- AVAILABILITY CHECKER  ----------------------------------------------
+// ------------------------------- HANDLE CLICK * AVAILABILITY  ----------------------------------------------
 
 // Function that checks state of the key (availability)
-function availabilityChecker(clickedValue) {
-	console.log('Clicked value =', clickedValue);
+function handleClickAvailability(clickedValueAvailability) {
+	console.log('Clicked value Availability =', clickedValueAvailability); // I need this for development process
 
-	if (clickedValue == 'available'){
-		// plottingDots(cleanCombinedData[0]) // Reset to default
-		updatingMapAvailable(selectedTimeOfDayData);
+	if (clickedValueAvailability == 'available'){
+		updatingMapAvailable(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 219 & 224
 	} else {
-		// plottingDots(cleanCombinedData[0]) // Reset to default
-		updatingMapBusy(selectedTimeOfDayData)
+		updatingMapBusy(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 219 & 224
 	}
-};
+}
