@@ -1,9 +1,9 @@
 // ------------------------------- DATA FETCHING below ----------------------------------------------
 
 const endpointOne =
-  'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataDay.json'; // Data from a Day - 08:00h
+  'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataDay.json'; // Data endpoint from a Day - 08:00h
 const endpointTwo =
-  'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataEve.json'; // Data from an Eve - 20:00h
+  'https://raw.githubusercontent.com/ralfz123/frontend-data/main/d3/data/dataEve.json'; // Data endpoint from an Eve - 20:00h
 
 // Fetching data - Receiving data using fetch()
 const dataDay = fetch(endpointOne).then((response) => response.json()); // Parses JSON data
@@ -26,7 +26,6 @@ Promise.all([dataDay, dataEve]).then((response) => {
 function filteredDataset(dataDay, dataEve) {
   const cleanDataDay = dataDay.map((element) => {
     return {
-      timeOfday: 'day',
       point: element.point,
       status: element.status,
     };
@@ -34,14 +33,11 @@ function filteredDataset(dataDay, dataEve) {
 
   const cleanDataEve = dataEve.map((element) => {
     return {
-      timeOfday: 'eve',
       point: element.point,
       status: element.status,
     };
   });
 
-  // Push two cleaned arrays into one empty array (https://dzone.com/articles/ways-to-combine-arrays-in-javascript)
-  // combinedData.push(cleanDataDay, cleanDataEve)
   return [cleanDataDay, cleanDataEve];
 }
 
@@ -113,7 +109,7 @@ mapHolland().then((hollandMapData) => {
 
 // ------------------------------- D3 * MAP PLOTS  ----------------------------------------------
 
-// Formatter for map plots
+// Formatter for the map plots
 function plottingDots(dotData) {
   const g = d3.select('g');
   const projection = d3.geoMercator().scale(50000).center([5.116667, 52.17]);
@@ -136,7 +132,7 @@ function plottingDots(dotData) {
 
 // ------------------------------- D3 * REASSIGNING MAP PLOTS  --------------------------------------
 
-// Update pattern for the data plots after a clicked filter button
+// Update pattern for the map plots after a clicked filter button
 function reassignDots(filteredData, color, strokeColor) {
   const projection = d3.geoMercator().scale(50000).center([5.116667, 52.17]);
   const plottingDots = d3.selectAll('circle').data(filteredData); // Assign new data to the plottingDots
@@ -234,13 +230,13 @@ function handleClickTimeOfDay(clickedValueTimeOfDay) {
 
 // ------------------------------- HANDLE CLICK * AVAILABILITY  ----------------------------------------------
 
-// Function that checks state of the key (availability)
+// Filter option Availability - Function that checks state of the key (availability)
 function handleClickAvailability(clickedValueAvailability) {
   console.log('Clicked value Availability =', clickedValueAvailability); // I need this for development process
 
   if (clickedValueAvailability == 'available') {
-    updatingMapAvailable(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 225 & 230
+    updatingMapAvailable(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 221 & 226
   } else {
-    updatingMapBusy(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 225 & 230
+    updatingMapBusy(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 221 & 226
   }
 }
