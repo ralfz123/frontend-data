@@ -94,4 +94,5 @@ Credits to [Danny de Vries](https://github.com/dandevri) && [Laurens Aarnoudse](
 - Aarnoudse, L.  (2020, October 28). Slides. Consulted from https://cmda-tt.github.io/course-20-21/slides/
 
 ## :cop: License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
 This project from [Ralf](https://github.com/ralfz123) has a [MIT © License](https://github.com/ralfz123/frontend-data/blob/main/LICENSE)
