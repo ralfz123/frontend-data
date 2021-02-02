@@ -213,7 +213,7 @@ function updatingMapBusy(unfilteredData) {
 
 // Filter option Time Of Day - On click choose dataset to determine which time of day it is
 function handleClickTimeOfDay(clickedValueTimeOfDay) {
-  console.log('Clicked value TimeOfDay =', clickedValueTimeOfDay); // I need this for development process
+  // console.log('Clicked value TimeOfDay =', clickedValueTimeOfDay); // I need this for development process
 
   if (clickedValueTimeOfDay == 'day') {
     clickedValueTimeOfDay = 'day';
@@ -232,7 +232,7 @@ function handleClickTimeOfDay(clickedValueTimeOfDay) {
 
 // Filter option Availability - Function that checks state of the key (availability)
 function handleClickAvailability(clickedValueAvailability) {
-  console.log('Clicked value Availability =', clickedValueAvailability); // I need this for development process
+  // console.log('Clicked value Availability =', clickedValueAvailability); // I need this for development process
 
   if (clickedValueAvailability == 'available') {
     updatingMapAvailable(selectedTimeOfDayData); // selectedTimeOfDayData: stands for current dataset, see Line 221 & 226
